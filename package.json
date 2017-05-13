@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/bamsrud01/macro-tracker/issues"
   },
-  "homepage": "https://github.com/bamsrud01/macro-tracker#readme"
+  "homepage": "https://github.com/bamsrud01/macro-tracker#readme",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
 }
