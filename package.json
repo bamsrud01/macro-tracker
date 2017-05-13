@@ -1,0 +1,19 @@
+{
+  "name": "macrotrack",
+  "version": "1.0.0",
+  "description": "## Description",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bamsrud01/macro-tracker.git"
+  },
+  "author": "Barrett Amsrud",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bamsrud01/macro-tracker/issues"
+  },
+  "homepage": "https://github.com/bamsrud01/macro-tracker#readme"
+}
