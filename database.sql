@@ -1,3 +1,4 @@
+-- User data.  Email only for password reset.  Shared defaults to false
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   username varchar(40) NOT NULL,
@@ -6,6 +7,8 @@ CREATE TABLE users (
   shared BOOLEAN
 );
 
+-- Data for individual food items.  Serving stored as string to be parsed.
+-- Many-to-many with recipes
 CREATE TABLE foods (
   id SERIAL PRIMARY KEY,
   name varchar(40) NOT NULL,
@@ -20,6 +23,7 @@ CREATE TABLE foods (
   user_id INT NOT NULL
 );
 
+-- Data for recipes.  Many-to-many with foods.  Serving string to be parsed
 CREATE TABLE recipes (
   id SERIAL PRIMARY KEY,
   name varchar(120) NOT NULL,
@@ -40,6 +44,7 @@ CREATE TABLE foods_recipes (
   food_id INT
 );
 
+-- Comments on foods.
 CREATE TABLE food_comments (
   id SERIAL PRIMARY KEY,
   food_id INT NOT NULL,
@@ -47,6 +52,7 @@ CREATE TABLE food_comments (
   comment TEXT NOT NULL
 );
 
+-- Comments on recipes
 CREATE TABLE recipe_comments (
   id SERIAL PRIMARY KEY,
   recipe_id INT NOT NULL,
@@ -54,7 +60,8 @@ CREATE TABLE recipe_comments (
   comment TEXT NOT NULL
 );
 
--- Weight stored as string to be parsed
+-- Weight stored as string to be parsed.  Logged data is optional, but defaults at 0.
+-- Only one table per date.  If date exists for user, updates table, not inserts
 CREATE TABLE history (
   id SERIAL PRIMARY KEY,
   user_id INT NOT NULL,
