@@ -18,8 +18,10 @@
   "homepage": "https://github.com/bamsrud01/macro-tracker#readme",
   "dependencies": {
     "angular": "^1.6.4",
+    "angular-material": "^1.1.4",
     "angular-route": "^1.6.4",
     "body-parser": "^1.17.1",
-    "express": "^4.15.2"
+    "express": "^4.15.2",
+    "pg": "^6.1.5"
   }
 }
