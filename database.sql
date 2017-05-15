@@ -1,13 +1,18 @@
 -- User data.  Email only for password reset.  Shared defaults to false
+-- Calories, carbs, protein, fats used to set goals; optional
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   username varchar(40) NOT NULL,
   password varchar(120) NOT NULL,
   email varchar(80) NOT NULL,
-  shared BOOLEAN
+  shared BOOLEAN,
+  calories INT,
+  carbs INT,
+  protein INT,
+  fat INT
 );
 
--- Data for individual food items.  Serving stored as string to be parsed.
+-- Data for individual food items.  Serving is string to be parsed.
 -- Many-to-many with recipes
 CREATE TABLE foods (
   id SERIAL PRIMARY KEY,
@@ -23,7 +28,7 @@ CREATE TABLE foods (
   user_id INT NOT NULL
 );
 
--- Data for recipes.  Many-to-many with foods.  Serving string to be parsed
+-- Data for recipes.  Many-to-many with foods.  Serving is string to be parsed
 CREATE TABLE recipes (
   id SERIAL PRIMARY KEY,
   name varchar(120) NOT NULL,
