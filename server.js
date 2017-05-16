@@ -14,16 +14,16 @@ app.use(bodyParser.urlencoded({extended: true}));
 //  Create routes
 const authRoute = require('./routes/auth');
 const comment = require('./routes/comment');
-const foods = require('./routes/foods');
+const food = require('./routes/food');
 const profiles = require('./routes/profiles');
-const recipes = require('./routes/recipes');
+const recipe = require('./routes/recipe');
 
 //  Connect routes
 app.use('/auth', authRoute);
 app.use('/comment', comment);
-app.use('/foods', foods);
+app.use('/food', food);
 app.use('/profiles', profiles);
-app.use('/recipes', recipes);
+app.use('/recipe', recipe);
 
 //  Set up public connection
 app.get('/*', function(req, res) {

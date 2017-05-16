@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="macrotrack">
   <head>
     <meta charset="utf-8">
     <title>MacroTrack</title>
@@ -14,14 +14,16 @@
     <script src="scripts/nav.service.js"></script>
     <script src="scripts/main.service.js"></script>
     <script src="scripts/home.service.js"></script>
+
+    <base href="/" />
   </head>
-  <body>
+  <body ng-controller="MainController as main">
     <header>
       <h1>MacroTrack</h1>
     </header>
     <!-- Content varies -->
-    <main class="container-fluid">
+    <div class="container">
       <ng-view></ng-view>
-    </main>
+    </div>
   </body>
 </html>
