@@ -3,10 +3,25 @@
   <head>
     <meta charset="utf-8">
     <title>MacroTrack</title>
+    <script src="vendors/angular.min.js"></script>
+    <script src="vendors/angular-route.min.js"></script>
+
+    <script src="scripts/app.module.js"></script>
+    <script src="scripts/app.config.js"></script>
+
+    <scripts src="scripts/home.controller.js"></scripts>
+
+    <script src="scripts/nav.service.js"></script>
+    <script src="scripts/main.service.js"></script>
+    <script src="scripts/home.service.js"></script>
   </head>
   <body>
     <header>
       <h1>MacroTrack</h1>
     </header>
+    <!-- Content varies -->
+    <main class="container-fluid">
+      <ng-view></ng-view>
+    </main>
   </body>
 </html>
