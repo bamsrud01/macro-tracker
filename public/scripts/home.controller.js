@@ -5,5 +5,5 @@ angular.module('macrotrack')
 function HomeController(HomeService) {
 
   let home = this;
-  
+
 }

@@ -4,5 +4,7 @@ angular.module('macrotrack')
 function FoodController(FoodService) {
 
   let food = this;
-  
+
+  food.item = 'pizza';
+
 }

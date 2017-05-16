@@ -1,4 +1,6 @@
-angular.module('macrotrack', ['ngRoute'])
+angular.module('macrotrack', ['ngRoute']);
+
+angular.module('macrotrack')
   .controller('MainController', MainController);
 
 //  Parent of all controllers.  Uses NavService to move data between pages
