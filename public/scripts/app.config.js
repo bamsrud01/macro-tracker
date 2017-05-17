@@ -17,16 +17,16 @@ angular.module('macrotrack')
       controller: 'ProfileController as profile'
     }).when('/add-food', {
       templateUrl: 'addFood.html',
-      // controller: 'AddFoodController as add',
+      controller: 'AddItemController as add',
     }).when('add-recipe', {
       templateUrl: 'addRecipe.html',
-      // controller: 'AddRecipeController as add',
+      controller: 'AddItemController as add',
     }).when('/view', {
       templateUrl: 'view.html',
-      // controller: 'ViewController as view',
+      controller: 'ViewController as view',
     }).when('/log', {
       templateUrl: 'log.html',
-      // controller: 'LogController as log'
+      controller: 'LogController as log'
     }).otherwise({
       redirectTo: '/home'
     });
