@@ -67,6 +67,14 @@ CREATE TABLE recipe_comments (
   comment TEXT NOT NULL
 );
 
+-- Comments on user profiles
+CREATE TABLE profile_comments (
+  id SERIAL PRIMARY KEY,
+  profile_user_id INT NOT NULL,
+  user_id INT NOT NULL,
+  comment TEXT NOT NULL
+);
+
 -- Weight stored as string to be parsed.  Logged data is optional, but defaults at 0.
 -- Only one table per date.  If date exists for user, updates table, not inserts
 CREATE TABLE history (
