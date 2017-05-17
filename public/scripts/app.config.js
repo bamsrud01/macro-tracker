@@ -1,11 +1,11 @@
 angular.module('macrotrack')
   .config(function($routeProvider, $locationProvider) {
-    $routeProvider.when('/register', {
-      templateUrl: 'views/register.html',
-      controller: 'RegisterController as register'
-    }).when('/home', {
+    $routeProvider.when('/home', {
       templateUrl: 'views/home.html',
       controller: 'HomeController as home'
+    }).when('/register', {
+      templateUrl: 'views/register.html',
+      controller: 'RegisterController as register'
     }).when('/foods', {
       templateUrl: 'views/foods.html',
       controller: 'FoodController as food'
@@ -15,6 +15,18 @@ angular.module('macrotrack')
     }).when('/profile', {
       templateUrl: 'views/profile.html',
       controller: 'ProfileController as profile'
+    }).when('/add-food', {
+      templateUrl: 'addFood.html',
+      // controller: 'AddFoodController as add',
+    }).when('add-recipe', {
+      templateUrl: 'addRecipe.html',
+      // controller: 'AddRecipeController as add',
+    }).when('/view', {
+      templateUrl: 'view.html',
+      // controller: 'ViewController as view',
+    }).when('/log', {
+      templateUrl: 'log.html',
+      // controller: 'LogController as log'
     }).otherwise({
       redirectTo: '/home'
     });
