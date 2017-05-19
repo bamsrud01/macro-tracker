@@ -56,6 +56,7 @@ CREATE TABLE food_comments (
   id SERIAL PRIMARY KEY,
   food_id INT NOT NULL,
   user_id INT NOT NULL,
+  comment_date TIMESTAMP,
   comment TEXT NOT NULL
 );
 
@@ -64,6 +65,7 @@ CREATE TABLE recipe_comments (
   id SERIAL PRIMARY KEY,
   recipe_id INT NOT NULL,
   user_id INT NOT NULL,
+  comment_date TIMESTAMP,
   comment TEXT NOT NULL
 );
 
@@ -72,6 +74,7 @@ CREATE TABLE profile_comments (
   id SERIAL PRIMARY KEY,
   profile_user_id INT NOT NULL,
   user_id INT NOT NULL,
+  comment_date TIMESTAMP,
   comment TEXT NOT NULL
 );
 
