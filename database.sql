@@ -47,7 +47,7 @@ CREATE TABLE foods_recipes (
   id SERIAL PRIMARY KEY,
   recipe_id INT NOT NULL,
   food_id INT,
-  food_name varchar(40)
+  food_name varchar(40),
   food_amount varchar(120)
 );
 
