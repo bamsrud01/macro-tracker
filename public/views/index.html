@@ -32,6 +32,13 @@
   <body ng-controller="MainController as main">
     <header>
       <h1>MacroTrack</h1>
+
+      <!-- Temporary login / register information -->
+      <div id="login">
+        <input type="text" ng-model="main.login.username" placeholder="Username" />
+        <input type="text" ng-model="main.login.password" placeholder="Password" />
+        <a href="/register">Register</a>
+      </div>
     </header>
     <!-- Nav Elements -->
     <!-- Content varies -->
