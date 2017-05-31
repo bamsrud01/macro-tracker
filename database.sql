@@ -88,5 +88,7 @@ CREATE TABLE history (
   calories INT,
   carbs INT,
   protein INT,
-  fat INT
+  fat INT,
+  item_id INT,
+  item_name varchar(120)
 );
