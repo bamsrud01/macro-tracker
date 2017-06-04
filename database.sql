@@ -5,7 +5,7 @@ CREATE TABLE users (
   username varchar(40) NOT NULL,
   password varchar(120) NOT NULL,
   email varchar(80) NOT NULL,
-  shared BOOLEAN,
+  shared BOOLEAN NOT NULL,
   calories INT,
   carbs INT,
   protein INT,
@@ -39,7 +39,9 @@ CREATE TABLE recipes (
   protein INT,
   fat INT,
   user_id INT NOT NULL,
-  directions TEXT NOT NULL
+  directions TEXT NOT NULL,
+  source varchar(120),
+  source_url varchar(120)
 );
 
 -- Check in case foods do not exist.  User should not be forced to create every food.
