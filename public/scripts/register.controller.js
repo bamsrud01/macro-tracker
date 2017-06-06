@@ -5,11 +5,13 @@ function RegisterController(RegisterService) {
 
   let register = this;
 
-  //  Object to hold user data, default value set
-  //  { username, password, email, shared, (calories, carbs, protein, fat) }
-  register.user = {
+  const defaults = {
     shared: false
-  };
+  }
+
+  //  Object to hold user data, default value set, taken from defaults
+  //  { username, password, email, shared, (calories, carbs, protein, fat) }
+  register.user = defaults;
 
   //  register.username, register.password, register.confirm, register.email
   register.restrictions = {
@@ -19,6 +21,7 @@ function RegisterController(RegisterService) {
 
   //  Checks if user has completed all registration requirements
   register.failure = false;
+  register.confirm = '';
 
   //  Ensure email is valid
   register.validateEmail = function() {
@@ -30,6 +33,25 @@ function RegisterController(RegisterService) {
       register.restrictions.validEmail = false;
     }
   };
+
+  //  Set initial Calorie goal from given information (can be customized)
+  register.calculateCalories = () => {
+    let goal = 0;
+
+    if (register.user.carbs) {
+      goal += (register.user.carbs * 4);
+    }
+    if (register.user.protein) {
+      goal += (register.user.protein * 4);
+    }
+    if (register.user.fat) {
+      goal += (register.user.fat * 9);
+    }
+    console.log('Goal:', goal);
+    if (goal != 0) {
+      register.user.calories = goal;
+    }
+  }
 
 
 }

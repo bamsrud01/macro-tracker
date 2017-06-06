@@ -1,16 +1,25 @@
 <div>
   <h2>Register</h2>
   <h3>Enter a Username:</h3>
-  <input type="text" placeholder="Username" ng-model="register.username" />
+  <input type="text" placeholder="Username" ng-model="register.user.username" />
   <!-- Fail Message (register.restrictions.existingUsername) -->
   <h3>Enter Your Email Address</h3>
-  <input type="text" placeholder="example@abc.com" ng-model="register.email" />
+  <input type="text" placeholder="example@abc.com" ng-model="register.user.email" />
   <!-- Fail Message (register.restrictions.validEmail) -->
   <h3>Enter a Password:</h3>
-  <input type="password" placeholder="Password" ng-model="register.password" />
+  <input type="password" placeholder="Password" ng-model="register.user.password" />
   <input type="password" placeholder="Confirm Password" ng-model="register.confirm"/>
   <!-- Fail Message (register.failure) -->
   <!-- Profile publicly visible?  Default false (register.user.shared) -->
   <!-- Set macro and calorie goals -->
+  <h3>Set Daily Goals (Optional)</h3>
+  <h4>Net Carbohydrates</h4>
+  <input type="text" placeholder="Grams of Net Carbs" ng-model="register.user.carbs" ng-blur="register.calculateCalories()" />
+  <h4>Protein</h4>
+  <input type="text" placeholder="Grams of Protein" ng-model="register.user.protein" ng-blur="register.calculateCalories()" />
+  <h4>Fats</h4>
+  <input type="text" placeholder="Grams of Fats" ng-model="register.user.fat" ng-blur="register.calculateCalories()" />
+  <h4>Daily Calories</h4>
+  <input type="text" placeholder="Total Daily Calories" ng-model="register.user.calories" />
   <!-- Button (register.checkRequirements) -->
 </div>
