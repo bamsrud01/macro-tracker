@@ -57,7 +57,20 @@ function RegisterController(RegisterService) {
 
   // Check username unique status
   register.uniqueUsername = () => {
+    console.log('Checking...');
+    register.user.username = register.user.username.trim();
     //  User Service to check table
+    RegisterService.uniqueUsername(register.user.username)
+      .then((result) => {
+        console.log('Got result:', result);
+        if (result.length == 0) {
+          register.restrictions.existingUsername = false;
+          console.log('Username does not exist');
+        } else {
+          register.restrictions.existingUsername = true;
+          console.log('Username exists');
+        }
+      });
   }
 
   //  Check password requirements
