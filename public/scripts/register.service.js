@@ -16,4 +16,18 @@ function RegisterService($http) {
     });
   }
 
+  //  Register a user
+  service.register = function(userData) {
+    console.log('registering user');
+    return $http({
+      method: 'POST',
+      url: '/auth',
+      data: userData
+    }).then(function() {
+      $location.path('/home');
+    }, function(error) {
+      console.log('Error registering:', error);
+    });
+  };
+
 }

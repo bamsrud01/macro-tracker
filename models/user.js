@@ -47,7 +47,12 @@ function findById(id) {
 }
 
 //  Create a new user
-function createUser(username, password, email) {
+function createUser(userData) {
+  let { username, password, email, shared, calories, carbs, protein, fat } = userData;
+  if (calories != undefined) {
+
+  }
+  if ()
   return new Promise(function(resolve, reject) {
     bcrypt.hash(password, SALT_ROUNDS, function(err, hash){
       if (err) {
@@ -59,17 +64,18 @@ function createUser(username, password, email) {
           done();
           return reject(err);
         }
-        client.query('INSERT INTO users (username, password, email)' +
-          ' VALUES ($1, $2, $3) RETURNING *',
-          [username, hash, email],
-          function(err, result){
-             done();
-             if (err) {
-               return reject(err);
-             }
+        client.query('INSERT INTO users ' +
+        '(username, password, email, shared, calories, carbs, protein, fat) ' +
+        'VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
+          [username, password, email, shared, calories, carbs, protein, fat],
+          function(err, result) {
+            done();
+            if (err) {
+              return reject(err);
+            }
 
-             resolve(result.rows[0]);
-           });
+            resolve(result.rows[0]);
+          });
       });
     });
   });
