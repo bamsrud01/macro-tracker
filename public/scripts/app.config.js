@@ -1,3 +1,14 @@
+/*  TO-DO
+- Home
+- Register (WIP)
+- Food
+- Recipe
+- Profile
+- Add Item
+- View
+- Log
+*/
+
 angular.module('macrotrack')
   .config(function($routeProvider, $locationProvider) {
     $routeProvider.when('/home', {
