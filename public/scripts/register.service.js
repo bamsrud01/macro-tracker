@@ -16,7 +16,7 @@ function RegisterService($http) {
     });
   }
 
-  //  Register a user
+  //  Post a new user
   service.register = function(userData) {
     console.log('registering user');
     return $http({
