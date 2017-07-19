@@ -1,7 +1,7 @@
 angular.module('macrotrack')
   .controller('RegisterController', RegisterController);
 
-function RegisterController(RegisterService) {
+function RegisterController(RegisterService, NavService) {
 
   let register = this;
 

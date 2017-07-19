@@ -1,3 +1,15 @@
 <div>
   <h2>Add a Recipe</h2>
+  <input type="text" placeholder="Name" ng-model="add.recipe.name" />
+  <input type="text" placeholder="Serving size" ng-model="add.recipe.serving" />
+  <!-- Ingredients -->
+  <input type="textarea" placeholder="Directions" ng-model="add.recipe.directions" />
+  <input type="number" placeholder="Calories per serving" ng-model="add.recipe.calories" />
+  <input type="number" placeholder="Total carbs (g)" ng-model="add.recipe.carbs" />
+  <input type="number" placeholder="Carbs Fiber or Sugar Alcohol" ng-model="add.recipe.fiber" />
+  <input type="number" placeholder="Protein (g)" ng-model="add.recipe.protein" />
+  <input type="number" placeholder="Fat (g)" ng-model="add.recipe.fat" />
+  <h4>Not your recipe?  Give credit to the creator!</h4>
+  <input type="text" placeholder="Name of Source" ng-model="add.recipe.source" />
+  <input type="text" placeholder="Source URL" ng-model="add.recipe.source_url" />
 </div>

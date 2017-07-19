@@ -6,4 +6,11 @@ function NavService() {
 
   let service = this;
 
+  //  Global state of app
+  service.state = {
+    loggedIn: false,
+    username: false,
+    user_id: false
+  }
+
 }
