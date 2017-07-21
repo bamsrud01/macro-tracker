@@ -7,10 +7,12 @@ function NavService() {
   let service = this;
 
   //  Global state of app
+  //  TEMPORARY STATE:  { logginIn: true, username: TESTUSER, user_id: 1000 }
+  //  Reset to { loggedIn: false, username: false, user_id: false }
   service.state = {
-    loggedIn: false,
-    username: false,
-    user_id: false
+    loggedIn: true,
+    username: TESTUSER,
+    user_id: 1000
   }
 
 }
