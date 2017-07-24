@@ -94,3 +94,12 @@ CREATE TABLE history (
   item_id INT,
   item_name varchar(120)
 );
+
+-- Recipes and foods can be saved as favorites
+-- The field will have an id for food OR for recipe, not both.
+CREATE TABLE user_favorites (
+  id SERIAL PRIMARY KEY,
+  user_id INT NOT NULL,
+  recipe_id INT,
+  food_id INT
+);

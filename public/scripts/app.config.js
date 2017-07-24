@@ -7,6 +7,7 @@
 - Add Item
 - View
 - Log
+- Favorites
 */
 
 angular.module('macrotrack')
