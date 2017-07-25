@@ -11,22 +11,48 @@
     <!-- Controllers -->
     <script src="scripts/home.controller.js"></script>
     <script src="scripts/register.controller.js"></script>
+    <script src="scripts/food.controller.js"></script>
+    <script src="scripts/recipe.controller.js"></script>
+    <script src="scripts/favorites.controller.js"></script>
+    <script src="scripts/profile.controller.js"></script>
+    <script src="scripts/addfood.controller.js"></script>
+    <script src="scripts/addrecipe.controller.js"></script>
+    <script src="scripts/view.controller.js"></script>
+    <script src="scripts/track.controller.js"></script>
 
     <!-- Services -->
     <script src="scripts/main.service.js"></script>
     <script src="scripts/home.service.js"></script>
     <script src="scripts/register.service.js"></script>
+    <script src="scripts/food.service.js"></script>
+    <script src="scripts/recipe.service.js"></script>
+    <script src="scripts/favorites.service.js"></script>
+    <script src="scripts/profile.service.js"></script>
+    <script src="scripts/addfood.service.js"></script>
+    <script src="scripts/addrecipe.service.js"></script>
+    <script src="scripts/view.service.js"></script>
+    <script src="scripts/track.service.js"></script>
 
     <base href="/" />
   </head>
   <body ng-controller="MainController as main">
     <header>
       <h1>MacroTrack</h1>
+      <!-- Login -->
     </header>
+    <!-- Navbar on side -->
     <!-- Test links for routes -->
     <ul>
       <a href="/home">Home</a>
       <a href="/register">Register</a>
+      <a href="/foods">Foods</a>
+      <a href="/recipes">Recipes</a>
+      <a href="/favorites">Favorites</a>
+      <a href="/profile">Profile</a>
+      <a href="/add-food">Add Food</a>
+      <a href="/add-recipe">Add Recipe</a>
+      <a href="/view">View</a>
+      <a href="/track">Track</a>
     </ul>
     <div class="container">
       <ng-view></ng-view>
