@@ -1,15 +1,15 @@
-// //  Declare node modules
-// const express = require('express');
-// const path = require('path');
-// const bodyParser = require('body-parser');
-//
-// //  Initialize project
-// let app = express();
+//  Dependencies
+const express = require('express');
+const path = require('path');
+const bodyParser = require('body-parser');
 
-// //  Declare middleware
-// app.use(express.static('public'));
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({extended: true}));
+//  Declare Express app
+const app = express();
+
+//  Middleware
+app.use(express.static('public'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 //  Create routes
 const authRoute = require('./routes/auth');
