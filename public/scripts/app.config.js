@@ -30,7 +30,7 @@ angular.module('macrotrack')
     }).when('/add-food', {
       templateUrl: 'addFood.html',
       controller: 'AddItemController as add',
-    }).when('add-recipe', {
+    }).when('/add-recipe', {
       templateUrl: 'addRecipe.html',
       controller: 'AddItemController as add',
     }).when('/view', {

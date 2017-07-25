@@ -11,7 +11,7 @@ function NavService() {
   //  Reset to { loggedIn: false, username: false, user_id: false }
   service.state = {
     loggedIn: true,
-    username: TESTUSER,
+    username: 'TESTUSER',
     user_id: 1000
   }
 

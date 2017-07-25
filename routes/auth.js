@@ -8,7 +8,7 @@ const pg = require('pg');
 const passport = require('passport');
 
 //  Import user registration
-const User = require('..models/user');
+// const User = require('..models/user');
 
 //  Use 'macrotrack' database
 let config = {
