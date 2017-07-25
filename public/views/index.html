@@ -1,10 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="macrotrack">
   <head>
     <meta charset="utf-8">
     <title>MacroTrack</title>
+    <script src="vendors/angular.min.js"></script>
+    <script src="vendors/angular-route.min.js"></script>
+
+    <script src="scripts/app.module.js"></script>
+    <script src="scripts/app.config.js"></script>
+    <!-- Controllers -->
+    <script src="scripts/home.controller.js"></script>
+    <script src="scripts/register.controller.js"></script>
+
+    <!-- Services -->
+    <script src="scripts/main.service.js"></script>
+    <script src="scripts/home.service.js"></script>
+    <script src="scripts/register.service.js"></script>
+
+    <base href="/" />
   </head>
-  <body>
-    <h1>Test</h1>
+  <body ng-controller="MainController as main">
+    <header>
+      <h1>MacroTrack</h1>
+    </header>
+    <!-- Test links for routes -->
+    <ul>
+      <a href="/home">Home</a>
+      <a href="/register">Register</a>
+    </ul>
+    <div class="container">
+      <ng-view></ng-view>
+    </div>
   </body>
 </html>
