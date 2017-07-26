@@ -1,1 +1,17 @@
 <h1>Add Food Route</h1>
+<div>
+  <h3>Required Fields</h3>
+  <input type="text" ng-model="add.newFood.name" placeholder="Name"/>
+</div>
+<div>
+  <h3>Optional Fields</h3>
+  <input type="text" ng-model="add.newFood.variety" placeholder="Variety"/>
+  <input type="text" ng-model="add.newFood.brand" placeholder="Brand"/>
+  <input type="text" ng-model="add.newFood.serving" placeholder="Serving"/>
+  <input type="number" ng-model="add.newFood.calories" placeholder="Calories"/>
+  <input type="number" ng-model="add.newFood.carbs" placeholder="Total Carbs (g)"/>
+  <input type="number" ng-model="add.newFood.fiber" placeholder="Fiber and Sugar Alcohols (g)"/>
+  <input type="number" ng-model="add.newFood.protein" placeholder="Total Protein (g)"/>
+  <input type="number" ng-model="add.newFood.fat" placeholder="Total Fat (g)"/>
+</div>
+<button ng-click="add.submitNewFood()">Submit Food</button>
