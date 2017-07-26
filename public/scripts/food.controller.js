@@ -6,6 +6,14 @@ function FoodController(FoodService) {
 
   let food = this;
 
-  console.log('On Food');
+  //  Function to get all existing foods in the database
+  food.getAllFoods = () => {
+    FoodService.getAllFoods().then(foodData => {
+      food.listedFoods = foodData;
+    });
+  }
+
+  //  Get all foods in database when opening view
+  food.getAllFoods();
 
 }
