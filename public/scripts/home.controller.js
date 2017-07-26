@@ -1,7 +1,7 @@
 angular.module('macrotrack')
   .controller('HomeController', HomeController);
 
-//  Controls behavior of the home page
+//  Manages information displayed on the home page, both when a user is active or not
 function HomeController(HomeService) {
 
   let home = this;
