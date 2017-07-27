@@ -34,4 +34,29 @@ function AddFoodController(AddFoodService, MainService) {
     }
   }
 
+  //  Function to edit an existing food
+  add.updateFood = () => {
+    if ((MainService.state.user_id == add.newFood.user_id) && add.newFood.name) {
+      console.log('Updating food:', add.newFood);
+      AddFoodService.updateFood(add.newFood).then(response => {
+        console.log('Success! Food updated:', response);
+      });
+    } else {
+      console.log('Error updating food!');
+    }
+  }
+
+  //  Function to delete an existing food
+  //  What will happen to recipes referencing the food?
+  add.deleteFood = () => {
+    if (MainService.state.user_id == add.newFood.user_id) {
+      console.log('Deleting food:', add.newFood);
+      AddFoodService.deleteFood(add.newFood.id).then(() => {
+        console.log('Success!  Food deleted.  Should redirect?');
+      });
+    } else {
+      console.log('Error deleting food!');
+    }
+  }
+
 }

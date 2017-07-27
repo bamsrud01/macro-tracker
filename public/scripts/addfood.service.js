@@ -13,8 +13,34 @@ function AddFoodService($http) {
       url: '/food',
       data: foodData
     }).then(response => {
-      console.log('SERVICE recieved response:', response);
+      console.log('SERVICE received response:', response);
       return response.data;
+    });
+  }
+
+  //  Update an existing food
+  service.updateFood = (foodData) => {
+    console.log('Will PUT data:', foodData);
+    return $http({
+      method: 'PUT',
+      url: '/food',
+      data: foodData
+    }).then(response => {
+      console.log('SERVICE received response:', response);
+      return response.data;
+    });
+  }
+
+  //  Delete an existing food
+  service.deleteFood = (foodId) => {
+    console.log('Will DELETE food with id:', foodId);
+    return $http({
+      method: 'DELETE',
+      url: '/food',
+      data: foodId
+    }).then(response => {
+      console.log('SERVICE received response:', response);
+      return;
     });
   }
 
