@@ -72,7 +72,7 @@ router.post('/', function(req, res) {
 
 /*  PUT requests  */
 
-//  Update a food (UNTESTED)
+//  Update a food
 router.put('/', function(req, res) {
   const { id, name, variety, brand, serving, calories, carbs, fiber, protein, fat } = req.body;
   pool.connect(function(err, client, done) {
@@ -104,6 +104,7 @@ router.put('/', function(req, res) {
 
 //  Delete a food (UNTESTED)
 router.delete('/', function(req, res) {
+  const foodId = req.query.foodId;
   pool.connect(function(err, client, done) {
     try {
       if (err) {
@@ -111,7 +112,7 @@ router.delete('/', function(req, res) {
         res.sendStatus(500);
         return;
       }
-      client.query('DELETE FROM foods WHERE id=$1', [req.body],
+      client.query('DELETE FROM foods WHERE id=$1', [foodId],
       function (err, result) {
         if (err) {
           console.log('Error querying database:', err);

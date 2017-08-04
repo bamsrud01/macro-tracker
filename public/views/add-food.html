@@ -14,4 +14,6 @@
   <input type="number" ng-model="add.newFood.protein" placeholder="Total Protein (g)"/>
   <input type="number" ng-model="add.newFood.fat" placeholder="Total Fat (g)"/>
 </div>
-<button ng-click="add.submitNewFood()">Submit Food</button>
+<button ng-hide="add.editMode" ng-click="add.submitNewFood()">Submit Food</button>
+<button ng-show="add.editMode" ng-click="add.updateFood()">Update Food</button>
+<button ng-show="add.editMode" ng-click="add.deleteFood()">Delete Food</button>

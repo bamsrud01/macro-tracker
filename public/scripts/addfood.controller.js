@@ -2,13 +2,21 @@ angular.module('macrotrack')
   .controller('AddFoodController', AddFoodController);
 
 //  Manages CRUD operations on foods
-function AddFoodController(AddFoodService, MainService) {
+function AddFoodController(AddFoodService, MainService, $location) {
 
   let add = this;
 
   //  If an existing food, populate fields
   if (AddFoodService.existingFood) {
-    add.newFood = AddFoodService.existingFood;
+    add.newFood = AddFoodService.foodToEdit;
+    AddFoodService.existingFood = false;
+  }
+
+  //  Set mode to display buttons for Add, or for Update and Delete
+  if (add.newFood) {
+    add.editMode = true;
+  } else {
+    add.editMode = false;
   }
 
   //  Food with all fields at null
@@ -45,6 +53,7 @@ function AddFoodController(AddFoodService, MainService) {
       console.log('Updating food:', add.newFood);
       AddFoodService.updateFood(add.newFood).then(response => {
         console.log('Success! Food updated:', response);
+        $location.path('/foods');
       });
     } else {
       console.log('Error updating food!');
@@ -58,6 +67,7 @@ function AddFoodController(AddFoodService, MainService) {
       console.log('Deleting food:', add.newFood);
       AddFoodService.deleteFood(add.newFood.id).then(() => {
         console.log('Success!  Food deleted.  Should redirect?');
+        $location.path('/foods');
       });
     } else {
       console.log('Error deleting food!');

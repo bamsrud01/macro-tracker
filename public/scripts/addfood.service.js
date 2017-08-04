@@ -5,6 +5,10 @@ function AddFoodService($http) {
 
   let service = this;
 
+  //  Will contain:
+    //  existingFood {false}
+    //  foodToEdit {food_object}
+
   //  Post a new food to the database
   service.submitNewFood = (foodData) => {
     console.log('Will POST data:', foodData);
@@ -34,10 +38,10 @@ function AddFoodService($http) {
   //  Delete an existing food
   service.deleteFood = (foodId) => {
     console.log('Will DELETE food with id:', foodId);
-    return $http({
-      method: 'DELETE',
-      url: '/food',
-      data: foodId
+    return $http.delete('/food', {
+      params: {
+        foodId
+      }
     }).then(response => {
       console.log('SERVICE received response:', response);
       return;

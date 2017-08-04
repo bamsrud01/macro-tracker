@@ -18,7 +18,8 @@ function FoodController(MainService, FoodService, AddFoodService, $location) {
 
   //  Function to edit a food if users are the same
   food.editFood = (foodObject) => {
-    AddFoodService.existingFood = foodObject;
+    AddFoodService.existingFood = true;
+    AddFoodService.foodToEdit = foodObject;
     $location.path('/add-food');
   }
 
