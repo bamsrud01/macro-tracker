@@ -2,7 +2,8 @@
 <div ng-repeat="listedFood in food.listedFoods">
   <div>
     <h3>{{listedFood.name}}</h3>
-    <p ng-if="listedFood.variety">Type: {{listedFood.variety}}</p>
+    <p ng-if="listedFood.variety">Variety: {{listedFood.variety}}</p>
     <p ng-if="listedFood.brand">Type: {{listedFood.brand}}</p>
+    <button ng-if="food.activeUser.user_id == listedFood.user_id">Edit Food</button>
   </div>
 </div>

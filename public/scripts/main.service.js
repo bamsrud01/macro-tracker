@@ -6,4 +6,7 @@ function MainService($http, $location) {
 
   let service = this;
 
+  //  Holds state object:
+  //  service.state = { loggedIn, username, user_id }
+
 }

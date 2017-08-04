@@ -1,6 +1,10 @@
 angular.module('macrotrack')
   .service('FoodService', FoodService);
 
+//  Features to add:
+  //  Sort
+  //  Search
+
 function FoodService($http) {
 
   let service = this;
