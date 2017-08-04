@@ -2,7 +2,7 @@ angular.module('macrotrack')
   .controller('FoodController', FoodController);
 
 //  Manages displaying and sorting existing food objects
-function FoodController(FoodService, MainService) {
+function FoodController(MainService, FoodService, AddFoodService, $location) {
 
   let food = this;
 
@@ -14,6 +14,12 @@ function FoodController(FoodService, MainService) {
     FoodService.getAllFoods().then(foodData => {
       food.listedFoods = foodData;
     });
+  }
+
+  //  Function to edit a food if users are the same
+  food.editFood = (foodObject) => {
+    AddFoodService.existingFood = foodObject;
+    $location.path('/add-food');
   }
 
   //  Get all foods in database when opening view

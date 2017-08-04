@@ -6,6 +6,11 @@ function AddFoodController(AddFoodService, MainService) {
 
   let add = this;
 
+  //  If an existing food, populate fields
+  if (AddFoodService.existingFood) {
+    add.newFood = AddFoodService.existingFood;
+  }
+
   //  Food with all fields at null
   const emptyFood = {
     name: null,
