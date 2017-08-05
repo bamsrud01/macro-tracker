@@ -70,8 +70,7 @@ function AddRecipeController(AddRecipeService, MainService, $location) {
         console.log('Successfully added ingredient:', response);
       });
     });
+    add.ingredientsList = [];
   }
-
-  console.log('On Add Recipe');
 
 }
