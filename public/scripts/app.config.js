@@ -1,7 +1,7 @@
 /*  TO-DO
 - Home
 - Register
-- Food
+- Food (DONE!)
 - Recipe
 - Profile
 - Add Item
