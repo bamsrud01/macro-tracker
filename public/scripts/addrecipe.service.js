@@ -11,11 +11,24 @@ function AddRecipeService($http) {
 
   //  Post a new food to the database
   service.submitNewRecipe = (recipeData) => {
-    console.log('Will POST data:', recipeData);
+    console.log('Will POST recipe data:', recipeData);
     return $http({
       method: 'POST',
       url: '/recipe',
       data: recipeData
+    }).then(response => {
+      console.log('SERVICE received response:', response);
+      return response.data;
+    });
+  }
+
+  //  Post an ingredient to the database
+  service.submitIngredient = (ingredientData) => {
+    console.log('Will POST ingredient data', ingredientData);
+    return $http({
+      method: 'POST',
+      url: '/recipe/ingredient',
+      data: ingredientData
     }).then(response => {
       console.log('SERVICE received response:', response);
       return response.data;

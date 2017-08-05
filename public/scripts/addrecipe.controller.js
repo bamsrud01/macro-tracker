@@ -8,7 +8,13 @@ function AddRecipeController(AddRecipeService, MainService, $location) {
 
   //  Contains add.newRecipe {recipe_data}
   //  Contains add.ingredientsList [{ingredient_data}]
-  add.ingredientsList = ['DUMMY DATA'];
+  //  Contains add.activeRecipeId
+  add.ingredientsList = [{
+    food_name: 'Apple',
+    food_amount: '2 slices'
+  }, {
+    food_name: 'Salt'
+  }];
 
   // If an existing recipe, populate fields
   if (AddRecipeService.existingRecipe) {
@@ -45,7 +51,8 @@ function AddRecipeController(AddRecipeService, MainService, $location) {
       add.newRecipe.user_id = MainService.state.user_id;
       AddRecipeService.submitNewRecipe(add.newRecipe).then(response => {
         console.log('Success!  New recipe created:', response);
-        //  Post ingredients
+        add.activeRecipeId = response[0].id;
+        postIngredients(response[0].id);
         add.newRecipe = emptyRecipe;
       });
 
@@ -56,8 +63,13 @@ function AddRecipeController(AddRecipeService, MainService, $location) {
   }
 
   //  Function to post ingredients array data
-  function postIngredients() {
-
+  function postIngredients(recipeId) {
+    add.ingredientsList.map(ingredient => {
+      ingredient.recipe_id = recipeId;
+      AddRecipeService.submitIngredient(ingredient).then(response => {
+        console.log('Successfully added ingredient:', response);
+      });
+    });
   }
 
   console.log('On Add Recipe');
