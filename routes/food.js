@@ -102,7 +102,7 @@ router.put('/', function(req, res) {
 
 /*  DELETE requests  */
 
-//  Delete a food (UNTESTED)
+//  Delete a food
 router.delete('/', function(req, res) {
   const foodId = req.query.foodId;
   pool.connect(function(err, client, done) {

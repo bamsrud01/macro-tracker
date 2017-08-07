@@ -42,7 +42,7 @@ router.get('/', function(req, res) {
 
 /*  POST requests  */
 
-//  Post a new recipe (UNTESTED)
+//  Post a new recipe
 router.post('/', function(req, res) {
   const { name, serving, calories, carbs, fiber, protein, fat, directions, source, source_url, user_id} = req.body;
   pool.connect(function(err, client, done) {
@@ -70,7 +70,7 @@ router.post('/', function(req, res) {
   });
 });
 
-//  Post ingredients for recipes (UNTESTED)
+//  Post ingredients for recipes
 router.post('/ingredient', function(req, res) {
   const { recipe_id, food_name, food_amount } = req.body;
   pool.connect(function(err, client, done) {
@@ -98,6 +98,115 @@ router.post('/ingredient', function(req, res) {
   });
 });
 
+/*  PUT requests  */
+
+//  Update a recipe (UNTESTED)
+router.put('/', function(req, res) {
+  const {  } = req.body;
+  pool.connect(function(err, client, done) {
+    try {
+      if (err) {
+        console.log('Error connecting to database:', err);
+        res.sendStatus(500);
+        return;
+      }
+      client.query('',
+      [],
+      function (err, result) {
+        if (err) {
+          console.log('Error querying database:', err);
+          res.sendStatus(500);
+          return;
+        }
+        console.log('Returning rows:', result.rows);
+        res.send(result.rows);
+      });
+    } finally {
+      done();
+    }
+  });
+});
+
+//  Update ingredients for recipes (UNTESTED)
+router.put('/ingredient', function(req, res) {
+  const { id, name, variety, brand, serving, calories, carbs, fiber, protein, fat } = req.body;
+  pool.connect(function(err, client, done) {
+    try {
+      if (err) {
+        console.log('Error connecting to database:', err);
+        res.sendStatus(500);
+        return;
+      }
+      client.query('',
+      [],
+      function (err, result) {
+        if (err) {
+          console.log('Error querying database:', err);
+          res.sendStatus(500);
+          return;
+        }
+        console.log('Returning rows:', result.rows);
+        res.send(result.rows);
+      });
+    } finally {
+      done();
+    }
+  });
+});
+
+/*  DELETE requests  */
+
+//  Delete a recipe (UNTESTED)
+router.delete('/', function(req, res) {
+  const recipeId = req.query.recipeId;  //  Change as required
+  pool.connect(function(err, client, done) {
+    try {
+      if (err) {
+        console.log('Error connecting to database:', err);
+        res.sendStatus(500);
+        return;
+      }
+      client.query('DELETE FROM recipes WHERE id=$1', [recipeId],
+      function (err, result) {
+        if (err) {
+          console.log('Error querying database:', err);
+          res.sendStatus(500);
+          return;
+        }
+        console.log('Deleted food');
+        res.sendStatus(204);
+      });
+    } finally {
+      done();
+    }
+  });
+});
+
+//  Delete an ingredient (UNTESTED)
+router.delete('/ingredient', function(req, res) {
+  const ingredientId = req.query.ingredientId;  //  Change as required
+  pool.connect(function(err, client, done) {
+    try {
+      if (err) {
+        console.log('Error connecting to database:', err);
+        res.sendStatus(500);
+        return;
+      }
+      client.query('DELETE FROM foods_recipes WHERE id=$1', [ingredientId],
+      function (err, result) {
+        if (err) {
+          console.log('Error querying database:', err);
+          res.sendStatus(500);
+          return;
+        }
+        console.log('Deleted food');
+        res.sendStatus(204);
+      });
+    } finally {
+      done();
+    }
+  });
+});
 
 //  Export router
 module.exports = router;
