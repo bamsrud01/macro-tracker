@@ -2,5 +2,6 @@
 <div ng-repeat="listedRecipe in recipe.listedRecipes">
   <div>
     <h3>{{listedRecipe.name}}</h3>
+    <button ng-if="recipe.activeUser.user_id == listedRecipe.user_id" ng-click="recipe.editRecipe(listedRecipe)">Edit Recipe</button>
   </div>
 </div>
