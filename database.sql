@@ -103,7 +103,8 @@ CREATE TABLE log_foods (
   user_id INT NOT NULL,
   log_id INT NOT NULL,
   food_id INT NOT NULL,
-  amount INT NOT NULL
+  amount INT NOT NULL,
+  log_date varchar(100) NOT NULL
 );
 
 -- Related table for history, logging recipes
@@ -112,7 +113,8 @@ CREATE TABLE log_recipes (
   user_id INT NOT NULL,
   log_id INT NOT NULL,
   recipe_id INT NOT NULL,
-  amount INT NOT NULL
+  amount INT NOT NULL,
+  log_date varchar(100) NOT NULL
 );
 
 -- Recipes and foods can be saved as favorites
