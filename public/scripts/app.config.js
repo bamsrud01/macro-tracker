@@ -1,13 +1,45 @@
 /*  TO-DO
 - Home
 - Register
-- Food (DONE!)
 - Recipe
+  - Update
+  - Delete
+- Ingredients
 - Profile
-- Add Item
+  - Display
 - View
 - Log
+  - Get History
+  - Add Item to History
+  - Delete From History
 - Favorites
+- Comments on foods
+  - Get
+  - Add
+  - Update
+  - Delete
+- Comments on recipes
+  - Get
+  - Add
+  - Update
+  - Delete
+- Comments on users
+  - Get
+  - Add
+  - Update
+  - Delete
+
+
+DONE
+- Food
+  - Get
+  - Add
+  - Update
+  - Delete
+- Recipe
+  -Get
+  - Add
+- Add Item
 */
 
 angular.module('macrotrack')

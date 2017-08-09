@@ -95,8 +95,24 @@ CREATE TABLE history (
   carbs INT,
   protein INT,
   fat INT,
-  item_id INT,
-  item_name varchar(120)
+);
+
+-- Related table for history, logging foods
+CREATE TABLE log_foods (
+  id SERIAL PRIMARY KEY,
+  user_id INT NOT NULL,
+  log_id INT NOT NULL,
+  food_id INT NOT NULL,
+  amount INT NOT NULL
+);
+
+-- Related table for history, logging recipes
+CREATE TABLE log_recipes (
+  id SERIAL PRIMARY KEY,
+  user_id INT NOT NULL,
+  log_id INT NOT NULL,
+  recipe_id INT NOT NULL,
+  amount INT NOT NULL
 );
 
 -- Recipes and foods can be saved as favorites
