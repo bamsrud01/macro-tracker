@@ -34,7 +34,7 @@ router.get('/date', function(req, res) {
           res.sendStatus(500);
           return;
         }
-        console.log('Got rows from database:', result.rows);
+        console.log('Got rows from database (get /profile/date):', result.rows);
         res.send(result.rows);
       });
     } finally {
@@ -48,6 +48,7 @@ router.get('/date', function(req, res) {
 //  Post user date record
 router.post('/date', function(req, res) {
   const { user_id, log_date, weight, calories, carbs, protein, fat } = req.body;
+  console.log('In post.  User id:', user_id);
   pool.connect(function(err, client, done) {
     try {
       if (err) {
@@ -60,7 +61,7 @@ router.post('/date', function(req, res) {
       [user_id, log_date, weight, calories, carbs, protein, fat],
       function (err, result) {
         if (err) {
-          console.log('Error querying database:', err);
+          console.log('Error querying database (post /profiles/date):', err);
           res.sendStatus(500);
           return;
         }
@@ -74,6 +75,34 @@ router.post('/date', function(req, res) {
 });
 
 /*  PUT requests  */
+
+//  Put user date record
+router.put('/date', function(req, res) {
+  const { id, weight, calories, carbs, protein, fat } = req.body;
+  pool.connect(function(err, client, done) {
+    try {
+      if (err) {
+        console.log('Error connecting to database:', err);
+        res.sendStatus(500);
+        return;
+      }
+      client.query('UPDATE history SET weight=$1, calories=$2, ' +
+      'carbs=$3, protein=$4, fat=$5 WHERE id=$6 RETURNING *',
+      [weight, calories, carbs, protein, fat, id],
+      function (err, result) {
+        if (err) {
+          console.log('Error querying database:', err);
+          res.sendStatus(500);
+          return;
+        }
+        console.log('Returning rows (put /profiles/date):', result.rows);
+        res.send(result.rows);
+      });
+    } finally {
+      done();
+    }
+  });
+});
 
 /*  DELETE requests  */
 

@@ -19,8 +19,8 @@ function TrackService($http) {
   }
 
   //  Update an existing profile record
-  service.postLog = (logData) => {
-    console.log('Will POST new user record:', logData);
+  service.updateLog = (logData) => {
+    console.log('Will PUT new user record:', logData);
     return $http({
       method: 'PUT',
       url: '/profiles/date',

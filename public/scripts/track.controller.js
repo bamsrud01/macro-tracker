@@ -40,6 +40,7 @@ function TrackController(TrackService, ProfileService, MainService) {
         console.log('FILL ME IN!');
       });
     } else {
+      console.log('Current value of logItem:', track.logItem);
       TrackService.postLog(track.logItem).then(() => {
         console.log('FILL ME IN!');
       });
