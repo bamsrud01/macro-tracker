@@ -9,7 +9,8 @@ CREATE TABLE users (
   calories INT,
   carbs INT,
   protein INT,
-  fat INT
+  fat INT,
+  goal_weight varchar(40)
 );
 
 -- Data for individual food items.  Serving is string to be parsed.
@@ -89,7 +90,7 @@ CREATE TABLE profile_comments (
 CREATE TABLE history (
   id SERIAL PRIMARY KEY,
   user_id INT NOT NULL,
-  log_date TIMESTAMP,
+  log_date varchar(40),
   weight varchar(40),
   calories INT,
   carbs INT,

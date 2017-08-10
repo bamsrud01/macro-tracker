@@ -13,9 +13,11 @@ function TrackController(TrackService, ProfileService, MainService) {
 
   //  track.logItem = { user_id, log_date, weight, calories, carbs, protein, fat}
 
-  //  Check if today exists in database
-  track.checkForToday = () {
-    ProfileService.getLogByDate(track.today).then(response => {
+  //  Check if today exists in database, set data accordingly
+  track.checkForToday = () => {
+    console.log('Today:', track.today);
+    console.log('User ID:', track.activeUser.user_id);
+    ProfileService.getLogByDate(track.activeUser.user_id, track.today).then(response => {
       if (response.length > 0) {
         track.editing = true;
         track.logItem = response[0];
@@ -29,6 +31,19 @@ function TrackController(TrackService, ProfileService, MainService) {
       console.log('Today\'s logged data:', response);
       console.log('Editing:', track.editing);
     });
+  }
+
+  //  Submit or update record
+  track.submitRecord = () => {
+    if (track.editing) {
+      TrackService.updateLog(track.logItem).then(() => {
+        console.log('FILL ME IN!');
+      });
+    } else {
+      TrackService.postLog(track.logItem).then(() => {
+        console.log('FILL ME IN!');
+      });
+    }
   }
 
 
