@@ -26,8 +26,6 @@ function TrackController(TrackService, ProfileService, MainService) {
 
   //  Check if today exists in database, set data accordingly
   track.checkForToday = () => {
-    console.log('Today:', track.today);
-    console.log('User ID:', track.activeUser.user_id);
     ProfileService.getLogByDate(track.activeUser.user_id, track.today).then(response => {
       if (response.length > 0) {
         track.editing = true;
@@ -47,26 +45,31 @@ function TrackController(TrackService, ProfileService, MainService) {
   //  Submit or update record
   track.submitRecord = () => {
     if (track.editing) {
-      TrackService.updateLog(track.logItem).then(() => {
-        console.log('FILL ME IN!');
+      TrackService.updateLog(track.logItem).then(response => {
+        console.log('Log response:', response);
+        checkForToday();
       });
     } else {
       console.log('Current value of logItem:', track.logItem);
-      TrackService.postLog(track.logItem).then(() => {
-        console.log('FILL ME IN!');
+      TrackService.postLog(track.logItem).then(response => {
+        console.log('Log response:', response);
+        checkForToday();
       });
     }
   }
 
 
   //  HOW THIS WILL WORK
-    //  Users will have ONE entry per day
-    //  Every navigation to the page will GET all entries for that user
-    //  The first entry of the day will CREATE a row (checking timestamps of each item to see if one exists for the day)
-    //  Every subsequent entry will UPDATE the existing row
+    //  ! Users will have ONE entry per day
+    //  ! Every navigation to the page will GET all entries for that user
+    //  ! The first entry of the day will CREATE a row (checking timestamps of each item to see if one exists for the day)
+    //  ! Every subsequent entry will UPDATE the existing row
     //  Macronutrients may be manually entered, or automatically added for foods/recipes
     //  Provide a preview of new data before user approves it
     //  Foods and recipes will be added to a secondary table referencing the history table
+    //  Add feature to remove logged items, as well as adjust daily log accordingly.
+    //  Possibly edit daily numbers directly
+    //  Add feature to edit previous days
 
   //  May import food/recipe from another path (DO LATER)
 
