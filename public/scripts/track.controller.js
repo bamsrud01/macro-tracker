@@ -11,7 +11,18 @@ function TrackController(TrackService, ProfileService, MainService) {
   //  { loggedIn, username, user_id }
   track.activeUser = MainService.state;
 
-  //  track.logItem = { user_id, log_date, weight, calories, carbs, protein, fat}
+  //  track.logItem = { user_id, log_date, weight, calories, carbs, protein, fat }
+  //  track.entryData = { shown, itemId, calories, carbs, protein, fat, amount, date }
+  track.entryData = {
+    shown: false,
+    itemId: null,
+    calories: 0,
+    carbs: 0,
+    protein: 0,
+    fat: 0,
+    amount: 0,
+    date: null
+  }
 
   //  Check if today exists in database, set data accordingly
   track.checkForToday = () => {
