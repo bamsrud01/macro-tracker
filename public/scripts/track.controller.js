@@ -47,9 +47,9 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
   //  Prepare data for a new logged item - MAY NEED ADJUSTMENT
   track.prepareEntry = (itemType, itemId) => {
     console.log('Item type:', itemType);
-    if (itemType = 'food') {
+    if (itemType == 'food') {
       getFoodInformation(itemId);
-    } else if (itemType = 'recipe') {
+    } else if (itemType == 'recipe') {
       getRecipeInformation(itemId);
     } else {
       clearInformation();
@@ -87,17 +87,43 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
 
   //  Get information for items to submit and clear information
   function getFoodInformation(foodId) {
+    console.log('Get food information called with id:', foodId);
     FoodService.getOneFood(foodId).then(response => {
       console.log('Track got food data:', response[0]);
+      track.receivedInformation = {
+        type: 'food',
+        name: response[0].name,
+        variety: response[0].variety,
+        serving: response[0].serving,
+        brand: response[0].brand,
+        user_id: response[0].user_id
+      }
+      console.log('receivedInformation object:', track.receivedInformation);
+      addToPending(response[0]);
     });
   }
   function getRecipeInformation(recipeId) {
     RecipeService.getOneRecipe(recipeId).then(response => {
       console.log('Track got recipe data:', response[0]);
+      track.receivedInformation = {
+        type: 'recipe',
+        name: response[0].name,
+        serving: response[0].serving
+      }
+      console.log('receivedInformation object:', track.receivedInformation);
+      addToPending(response[0]);
     });
   }
   function clearInformation() {
+    track.receivedInformation = {}
+  }
 
+  //  Add nutrition data to pending data
+  function addToPending(foodInformation) {
+    track.pendingData.calories = foodInformation.calories;
+    track.pendingData.carbs = foodInformation.carbs;
+    track.pendingData.protein = foodInformation.protein;
+    track.pendingData.fat = foodInformation.fat;
   }
 
   //  Submit or update record
@@ -142,7 +168,7 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
     //  ! Every navigation to the page will GET all entries for that user
     //  ! The first entry of the day will CREATE a row (checking timestamps of each item to see if one exists for the day)
     //  ! Every subsequent entry will UPDATE the existing row
-    //  Macronutrients may be manually entered, or automatically added for foods/recipes
+    //  ! Macronutrients may be manually entered, or automatically added for foods/recipes
     //  ! Provide a preview of new data before user approves it
     //  Foods and recipes will be added to a secondary table referencing the history table
     //  Add feature to remove logged items, as well as adjust daily log accordingly.
@@ -154,11 +180,8 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
 
   //  (OPTIONAL - FOR FUTURE) - Allow users to queue multiple items to add all at once
 
-
   //  Run function to set log values
   track.checkForToday();
   track.prepareEntry();
-  getFoodInformation(1);
-  getRecipeInformation(3);
 
 }
