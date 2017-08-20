@@ -1,15 +1,27 @@
 <h1>Track Route</h1>
-<div>
+<div ng-hide="track.editAll">
   <h3>Log for {{track.dayStats.log_date}}</h3>
   <p ng-show="track.showWeight">Current Weight: {{track.dayStats.weight}}</p>
-  <!-- Update weight -->
-  <button ng-show="track.showWeight" ng-click="track.editWeight()">Update Weight</button>
+  <button ng-show="track.showWeight" ng-click="track.showWeight = false">Edit Weight</button>
   <input ng-hide="track.showWeight" type="text" ng-model="track.dayStats.weight" placeholder="Current Weight" />
-  <button ng-hide="track.showWeight" ng-click="track.updateWeight()">Submit Weight</button>
+  <button ng-hide="track.showWeight" ng-click="track.updateWeight()">Update</button>
   <p>Today's Calories: {{track.dayStats.calories}}</p>
   <p>Today's Net Carbs: {{track.dayStats.carbs}} g</p>
   <p>Today's Protein: {{track.dayStats.protein}} g</p>
   <p>Today's Fat: {{track.dayStats.fat}} g</p>
+  <button ng-click="track.editAll = true">Edit Directly</button>
+</div>
+<div ng-show="track.editAll">
+  <h3>Edit information directly | {{track.dayStats.log_date}}</h3>
+  <input type="text" ng-model="track.dayStats.weight" placeholder="Weight" />
+  <input type="number" ng-model="track.dayStats.calories" placeholder="Calories" />
+  <input type="number" ng-model="track.dayStats.carbs" placeholder="Net Carbs (g)" />
+  <input type="number" ng-model="track.dayStats.protein" placeholder="Protein (g)" />
+  <input type="number" ng-model="track.dayStats.fat" placeholder="Fat (g)" />
+  <button ng-click="track.updateAll()">Update</button>
+  <button ng-click="track.editAll = false">Cancel</button>
+</div>
+<div>
   <h3>Today's Logged items</h3>
   <!-- NG-repeat of track.loggedItems -->
 </div>

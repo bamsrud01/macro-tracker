@@ -131,7 +131,7 @@ router.post('/logRecipe', function(req, res) {
 
 /*  PUT requests  */
 
-//  Put user date record
+//  Put user nutrition record on date
 router.put('/date', function(req, res) {
   const { id, calories, carbs, protein, fat } = req.body;
   pool.connect(function(err, client, done) {
@@ -159,7 +159,7 @@ router.put('/date', function(req, res) {
   });
 });
 
-//  Put user weight record
+//  Put user weight record on date
 router.put('/weight', function(req, res) {
   const { weight, id } = req.body;
   pool.connect(function(err, client, done) {
@@ -178,6 +178,34 @@ router.put('/weight', function(req, res) {
           return;
         }
         console.log('Returning rows (put /profiles/weight):', result.rows);
+        res.send(result.rows);
+      });
+    } finally {
+      done();
+    }
+  });
+});
+
+//  Put to all user records on date
+router.put('/all', function(req, res) {
+  const { id, calories, carbs, protein, fat, weight } = req.body;
+  pool.connect(function(err, client, done) {
+    try {
+      if (err) {
+        console.log('Error connecting to database:', err);
+        res.sendStatus(500);
+        return;
+      }
+      client.query('UPDATE history SET calories=$1, ' +
+      'carbs=$2, protein=$3, fat=$4, weight=$5 WHERE id=$6 RETURNING *',
+      [calories, carbs, protein, fat, weight, id],
+      function (err, result) {
+        if (err) {
+          console.log('Error querying database:', err);
+          res.sendStatus(500);
+          return;
+        }
+        console.log('Returning rows (put /profiles/date):', result.rows);
         res.send(result.rows);
       });
     } finally {

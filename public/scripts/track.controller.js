@@ -169,11 +169,6 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
     }
   }
 
-  //  Toggle weight display and input
-  track.editWeight = () => {
-    track.showWeight = false;
-  }
-
   //  Update user weight
   track.updateWeight = () => {
     TrackService.updateWeight(track.dayStats).then(response => {
@@ -182,6 +177,13 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
     });
   }
 
+  //  Update all information
+  track.updateAll = () => {
+    TrackService.updateAll(track.dayStats).then(response => {
+      track.editAll = false;
+      track.checkForToday();
+    });
+  }
 
   //  HOW THIS WILL WORK
     //  ! Users will have ONE entry per day
@@ -190,7 +192,7 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
     //  ! Every subsequent entry will UPDATE the existing row
     //  ! Macronutrients may be manually entered, or automatically added for foods/recipes
     //  ! Provide a preview of new data before user approves it
-    //  Foods and recipes will be added to a secondary table referencing the history table
+    //  ! Foods and recipes will be added to a secondary table referencing the history table
     //  Add feature to remove logged items, as well as adjust daily log accordingly.
     //  Possibly edit daily numbers directly
     //  Add feature to edit previous days

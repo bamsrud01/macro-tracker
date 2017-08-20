@@ -30,11 +30,23 @@ function TrackService($http) {
     });
   }
 
+  //  Update only weight
   service.updateWeight = (logData) => {
-    console.log('Will PUT to user record:', logData);
     return $http({
       method: 'PUT',
       url: '/profiles/weight',
+      data: logData
+    }).then(response => {
+      return response.data;
+      //  [{ id, calories, carbs, protein, fat, log_date, user_id, weight }]
+    });
+  }
+
+  //  Update all fields
+  service.updateAll = (logData) => {
+    return $http({
+      method: 'PUT',
+      url: '/profiles/all',
       data: logData
     }).then(response => {
       return response.data;
