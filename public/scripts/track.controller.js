@@ -12,6 +12,7 @@ function TrackController(TrackService, ProfileService, MainService) {
   track.activeUser = MainService.state;
 
   //  track.dayStats = { user_id, log_date, weight, calories, carbs, protein, fat }
+  //  track.updatedWeight = { user_id, log_date, weight }
 
   //  Check if today exists in database, set data accordingly
   track.checkForToday = () => {
@@ -19,7 +20,6 @@ function TrackController(TrackService, ProfileService, MainService) {
       if (response.length > 0) {
         track.editing = true;
         track.dayStats = response[0];
-        track.pendingData.id = track.dayStats.id;
         track.displayLoggedItems();
       } else {
         track.editing = false;
@@ -33,13 +33,13 @@ function TrackController(TrackService, ProfileService, MainService) {
     });
   }
 
-  //  Get all items logged for the day
+  //  Get all items logged for the day - UNFINISHED
   track.displayLoggedItems = () => {
     console.log('GETTING ITEMS (code incomplete)');
     //  Will store response in track.loggedItems
   }
 
-  //  Prepare data for a new logged item
+  //  Prepare data for a new logged item - MAY NEED ADJUSTMENT
   track.prepareEntry = (itemType) => {
     console.log(itemType);
     track.pendingData = {
@@ -54,11 +54,31 @@ function TrackController(TrackService, ProfileService, MainService) {
     }
   }
 
+  //  Prepare sum of existing data and pending data
+  function calculateSums(dayId) {
+    var forSubmission = {
+      id: dayId
+    };
+    //  If property is undefined, set to 0
+    function unToZero(existing, pending) {
+      return (existing || 0) + (pending || 0);
+    }
+    forSubmission.calories = unToZero(track.dayStats.calories, track.pendingData.calories);
+    forSubmission.carbs = unToZero(track.dayStats.carbs, track.pendingData.carbs);
+    forSubmission.protein = unToZero(track.dayStats.protein, track.pendingData.protein);
+    forSubmission.fat = unToZero(track.dayStats.fat, track.pendingData.fat);
+
+    console.log('Sums of fields:', forSubmission);
+    return forSubmission;
+  }
+
   //  Submit or update record
-  //  MAY NO LONGER BE ACCURATE.  Check where data should be coming from
+  //  CURRENTY UPDATES DIRECTLY.
+    //  Adjust so submitted data is sum of existing and pending
+    //  Idea: Pending should not be editable unless button is clicked to adjust
   track.submitRecord = () => {
     if (track.editing) {
-      TrackService.updateLog(track.pendingData).then(response => {
+      TrackService.updateLog(calculateSums(track.dayStats.id)).then(response => {
         console.log('Log response:', response);
         track.checkForToday();
       });
@@ -69,6 +89,7 @@ function TrackController(TrackService, ProfileService, MainService) {
         track.checkForToday();
       });
     }
+    track.prepareEntry();
   }
 
 

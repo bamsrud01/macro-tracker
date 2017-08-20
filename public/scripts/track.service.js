@@ -20,7 +20,7 @@ function TrackService($http) {
 
   //  Update an existing profile record
   service.updateLog = (logData) => {
-    console.log('Will PUT new user record:', logData);
+    console.log('Will PUT to user record:', logData);
     return $http({
       method: 'PUT',
       url: '/profiles/date',

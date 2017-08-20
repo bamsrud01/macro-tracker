@@ -78,7 +78,7 @@ router.post('/date', function(req, res) {
 
 //  Put user date record
 router.put('/date', function(req, res) {
-  const { id, weight, calories, carbs, protein, fat } = req.body;
+  const { id, calories, carbs, protein, fat } = req.body;
   pool.connect(function(err, client, done) {
     try {
       if (err) {
@@ -86,9 +86,9 @@ router.put('/date', function(req, res) {
         res.sendStatus(500);
         return;
       }
-      client.query('UPDATE history SET weight=$1, calories=$2, ' +
-      'carbs=$3, protein=$4, fat=$5 WHERE id=$6 RETURNING *',
-      [weight, calories, carbs, protein, fat, id],
+      client.query('UPDATE history SET calories=$1, ' +
+      'carbs=$2, protein=$3, fat=$4 WHERE id=$5 RETURNING *',
+      [calories, carbs, protein, fat, id],
       function (err, result) {
         if (err) {
           console.log('Error querying database:', err);
