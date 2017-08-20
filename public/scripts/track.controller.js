@@ -6,22 +6,22 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
 
   let track = this;
 
-  track.today = new Date().toDateString();
+  //  May import food/recipe from another path (DO LATER)
+  //  (OPTIONAL - FOR FUTURE) - Allow users to queue multiple items to add all at once
+
+  //  logdate is current day by default
+  track.logDate = new Date().toDateString();
   track.showWeight = true;
 
   //  { loggedIn, username, user_id }
   track.activeUser = MainService.state;
 
   //  track.dayStats = { user_id, log_date, weight, calories, carbs, protein, fat }
-  //  track.updatedWeight = { user_id, log_date, weight }
 
   //  Check if today exists in database, set data accordingly
-  track.checkForToday = () => {
+  track.checkByDate = (selectedDate) => {
     //  Search by user id and date.  Returns sum of data for date
-    console.log('User id:', track.activeUser.user_id);
-    console.log('Search date:', track.today);
-    ProfileService.getLogByDate(track.activeUser.user_id, track.today).then(response => {
-      console.log('Check response:', response);
+    ProfileService.getLogByDate(track.activeUser.user_id, selectedDate).then(response => {
       if (response.length > 0) {
         track.editing = true;
         track.dayStats = response[0];
@@ -29,11 +29,16 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
       } else {
         track.editing = false;
         track.dayStats = {
-          log_date: track.today
+          log_date: selectedDate
         }
       }
-      console.log('Editing:', track.editing);
     });
+  }
+
+  //  Select a new date to log
+  track.updateLogDate = () => {
+    track.logDate = track.selectedDate.toDateString();
+    track.checkByDate(track.logDate);
   }
 
   //  Get all items logged for the day - UNFINISHED
@@ -52,7 +57,6 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
     } else {
       clearInformation();
     }
-    //  If not, clear itemInformation
     track.pendingData = {
       shown: true,    //  Possible turn off later
       type: itemType,
@@ -85,9 +89,7 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
 
   //  Get information for items to submit and clear information
   function getFoodInformation(foodId) {
-    console.log('Get food information called with id:', foodId);
     FoodService.getOneFood(foodId).then(response => {
-      console.log('Track got food data:', response[0]);
       track.receivedInformation = {
         type: 'food',
         itemId: response[0].id,
@@ -97,20 +99,17 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
         brand: response[0].brand,
         user_id: response[0].user_id
       }
-      console.log('receivedInformation object:', track.receivedInformation);
       addToPending(response[0]);
     });
   }
   function getRecipeInformation(recipeId) {
     RecipeService.getOneRecipe(recipeId).then(response => {
-      console.log('Track got recipe data:', response[0]);
       track.receivedInformation = {
         type: 'recipe',
         itemId: response[0].id,
         name: response[0].name,
         serving: response[0].serving
       }
-      console.log('receivedInformation object:', track.receivedInformation);
       addToPending(response[0]);
     });
   }
@@ -127,7 +126,6 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
   }
 
   //  Submit or update record
-    //  Idea: Pending should not be editable unless button is clicked to adjust
   track.submitRecord = () => {
     var itemInfo = {
       data: track.pendingData,
@@ -136,17 +134,18 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
     if (track.editing) {
       TrackService.updateLog(calculateSums(track.dayStats.id)).then(response => {
         track.logItem(response[0].id, itemInfo);
-        track.checkForToday();
+        track.checkByDate(track.logDate);
       });
     } else {
-      TrackService.postLog(track.pendingData, track.today).then(response => {
+      TrackService.postLog(track.pendingData, track.logDate).then(response => {
         track.logItem(response[0].id, itemInfo);
-        track.checkForToday();
+        track.checkByDate(track.logDate);
       });
     }
     track.prepareEntry();
   }
 
+  //  Log a food or recipe to a user's daily log
   track.logItem = (logId, itemInfo) => {
     var recordData = {
       user_id: track.activeUser.user_id,
@@ -173,7 +172,7 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
   track.updateWeight = () => {
     TrackService.updateWeight(track.dayStats).then(response => {
       track.showWeight = true;
-      track.checkForToday();
+      track.checkByDate(track.logDate);
     });
   }
 
@@ -181,29 +180,12 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
   track.updateAll = () => {
     TrackService.updateAll(track.dayStats).then(response => {
       track.editAll = false;
-      track.checkForToday();
+      track.checkByDate(track.logDate);
     });
   }
 
-  //  HOW THIS WILL WORK
-    //  ! Users will have ONE entry per day
-    //  ! Every navigation to the page will GET all entries for that user
-    //  ! The first entry of the day will CREATE a row (checking timestamps of each item to see if one exists for the day)
-    //  ! Every subsequent entry will UPDATE the existing row
-    //  ! Macronutrients may be manually entered, or automatically added for foods/recipes
-    //  ! Provide a preview of new data before user approves it
-    //  ! Foods and recipes will be added to a secondary table referencing the history table
-    //  Add feature to remove logged items, as well as adjust daily log accordingly.
-    //  Possibly edit daily numbers directly
-    //  Add feature to edit previous days
-    //  ! Update weight
-
-  //  May import food/recipe from another path (DO LATER)
-
-  //  (OPTIONAL - FOR FUTURE) - Allow users to queue multiple items to add all at once
-
   //  Run function to set log values
-  track.checkForToday();
+  track.checkByDate(track.logDate);
   track.prepareEntry('food', 1);
 
 }

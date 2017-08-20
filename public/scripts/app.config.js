@@ -1,8 +1,7 @@
 /*  TO-DO - PRIORITY
 - Ingredients
 - Log
-  - Add Item to History
-  - Delete From History
+  - Delete From History (with adjustment to log)
 - Register
 - Profile
   - Display
@@ -30,6 +29,8 @@ TO-DO - SECONDARY
   - Add
   - Update
   - Delete
+- Log
+  - View existing logged items
 - Images
 
 
@@ -45,6 +46,7 @@ DONE
 - Add Item
 - Log
   - Get History
+  - Add Item to History
 */
 
 angular.module('macrotrack')

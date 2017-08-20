@@ -1,4 +1,10 @@
 <h1>Track Route</h1>
+<div>
+  <h3>Select a date to track</h3>
+  <input type="date" ng-model="track.selectedDate" />
+  <button ng-click="track.updateLogDate()">Select</button>
+</div>
+
 <div ng-hide="track.editAll">
   <h3>Log for {{track.dayStats.log_date}}</h3>
   <p ng-show="track.showWeight">Current Weight: {{track.dayStats.weight}}</p>
