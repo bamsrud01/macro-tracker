@@ -1,6 +1,6 @@
 <h1>Track Route</h1>
 <div>
-  <h3>Today's Log</h3>
+  <h3>Log for {{track.dayStats.log_date}}</h3>
   <p>Current Weight: {{track.dayStats.weight}}</p>
   <!-- Update weight -->
   <p>Today's Calories: {{track.dayStats.calories}}</p>
@@ -21,6 +21,13 @@
   <label>Fat (g)</label><input type="number" ng-model="track.pendingData.fat"/>
   <!-- Amount -->
   <button ng-click="track.submitRecord()">Submit</button>
+</div>
+<div>
+  <h5>Preview Day's Stats</h5>
+  <p>Calories: {{(track.dayStats.calories || 0) + (track.pendingData.calories || 0)}}</p>
+  <p>Carbs: {{(track.dayStats.carbs || 0) + (track.pendingData.carbs || 0)}}</p>
+  <p>Protein: {{(track.dayStats.protein || 0) + (track.pendingData.protein || 0)}}</p>
+  <p>Fat: {{(track.dayStats.fat || 0) + (track.pendingData.fat || 0)}}</p>
 </div>
 <div>
   <h3>Sidebar Content (Later)</h3>

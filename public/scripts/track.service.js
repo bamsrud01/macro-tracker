@@ -31,4 +31,11 @@ function TrackService($http) {
     });
   }
 
+  //  Post a food item in user history
+  service.postFoodRecord = (logData) {
+    console.log('Will POST new logged food:', logData);
+    
+  }
+
+  //  Post a recipe item in user history
 }

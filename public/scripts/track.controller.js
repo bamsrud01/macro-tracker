@@ -12,10 +12,13 @@ function TrackController(TrackService, ProfileService, MainService) {
   track.activeUser = MainService.state;
 
   //  track.dayStats = { user_id, log_date, weight, calories, carbs, protein, fat }
+  //  track.receivedItemInformation = { name, variety, serving, brand, author, id }
+  //  track.itemInformation = { user_id, log_id, item_id, amount, log_date }
   //  track.updatedWeight = { user_id, log_date, weight }
 
   //  Check if today exists in database, set data accordingly
   track.checkForToday = () => {
+    //  Search by user id and date.  Returns sum of data for date
     ProfileService.getLogByDate(track.activeUser.user_id, track.today).then(response => {
       if (response.length > 0) {
         track.editing = true;
@@ -28,7 +31,6 @@ function TrackController(TrackService, ProfileService, MainService) {
           log_date: track.today
         }
       }
-      console.log('Today\'s logged data:', response);
       console.log('Editing:', track.editing);
     });
   }
@@ -41,10 +43,12 @@ function TrackController(TrackService, ProfileService, MainService) {
 
   //  Prepare data for a new logged item - MAY NEED ADJUSTMENT
   track.prepareEntry = (itemType) => {
-    console.log(itemType);
+    console.log('Item type:', itemType);
+    //  If item types, get item information to display
+    //  If not, clear receivedItemInformation and itemInformation
     track.pendingData = {
-      shown: true,
-      itemId: null,
+      shown: true,    //  Possible turn off later
+      type: itemType,
       calories: null,
       carbs: null,
       protein: null,
@@ -54,7 +58,7 @@ function TrackController(TrackService, ProfileService, MainService) {
     }
   }
 
-  //  Prepare sum of existing data and pending data
+  //  Calculate sum of existing data and pending data
   function calculateSums(dayId) {
     var forSubmission = {
       id: dayId
@@ -68,24 +72,25 @@ function TrackController(TrackService, ProfileService, MainService) {
     forSubmission.protein = unToZero(track.dayStats.protein, track.pendingData.protein);
     forSubmission.fat = unToZero(track.dayStats.fat, track.pendingData.fat);
 
-    console.log('Sums of fields:', forSubmission);
     return forSubmission;
   }
 
   //  Submit or update record
-  //  CURRENTY UPDATES DIRECTLY.
-    //  Adjust so submitted data is sum of existing and pending
     //  Idea: Pending should not be editable unless button is clicked to adjust
   track.submitRecord = () => {
+    if (track.pendingData.type == 'food') {
+      //  Add item to log_foods table using track.receivedItemInformation
+    }
+    if (track.pendingData.type == 'recipe') {
+      //  Add item to log_recipes table using track.receivedItemInformation
+    }
     if (track.editing) {
       TrackService.updateLog(calculateSums(track.dayStats.id)).then(response => {
-        console.log('Log response:', response);
         track.checkForToday();
       });
     } else {
       console.log('Current value of dayStats:', track.dayStats);
       TrackService.postLog(track.pendingData).then(response => {
-        console.log('Log response:', response);
         track.checkForToday();
       });
     }
@@ -99,17 +104,19 @@ function TrackController(TrackService, ProfileService, MainService) {
     //  ! The first entry of the day will CREATE a row (checking timestamps of each item to see if one exists for the day)
     //  ! Every subsequent entry will UPDATE the existing row
     //  Macronutrients may be manually entered, or automatically added for foods/recipes
-    //  Provide a preview of new data before user approves it
+    //  ! Provide a preview of new data before user approves it
     //  Foods and recipes will be added to a secondary table referencing the history table
+    //  Possibly create an array for this, allowing multiple foods and recipes to be added at once
     //  Add feature to remove logged items, as well as adjust daily log accordingly.
     //  Possibly edit daily numbers directly
     //  Add feature to edit previous days
+    //  Update weight
 
   //  May import food/recipe from another path (DO LATER)
 
 
   //  Run function to set log values
   track.checkForToday();
-  track.prepareEntry(null);
+  track.prepareEntry();
 
 }
