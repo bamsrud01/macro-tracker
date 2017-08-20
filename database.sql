@@ -50,7 +50,7 @@ CREATE TABLE recipes (
 -- food_amount encouraged, but not required.
 -- If user elects to link a food_id, it will link (POSSIBLE REMOVAL).
 -- Regardless of linking food
-CREATE TABLE foods_recipes (
+CREATE TABLE ingredients (
   id SERIAL PRIMARY KEY,
   recipe_id INT NOT NULL,
   -- food_id INT,

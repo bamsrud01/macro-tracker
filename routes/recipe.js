@@ -105,7 +105,7 @@ router.post('/ingredient', function(req, res) {
         res.sendStatus(500);
         return;
       }
-      client.query('INSERT INTO foods_recipes (recipe_id, food_name, food_amount) ' +
+      client.query('INSERT INTO ingredients (recipe_id, food_name, food_amount) ' +
       'VALUES ($1, $2, $3) RETURNING *',
       [recipe_id, food_name, food_amount],
       function (err, result) {
@@ -217,7 +217,7 @@ router.delete('/ingredient', function(req, res) {
         res.sendStatus(500);
         return;
       }
-      client.query('DELETE FROM foods_recipes WHERE id=$1', [ingredientId],
+      client.query('DELETE FROM ingredients WHERE id=$1', [ingredientId],
       function (err, result) {
         if (err) {
           console.log('Error querying database:', err);
