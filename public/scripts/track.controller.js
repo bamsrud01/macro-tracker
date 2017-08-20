@@ -7,6 +7,7 @@ function TrackController(TrackService, ProfileService, MainService) {
   let track = this;
 
   track.today = new Date().toDateString();
+  track.showWeight = true;
 
   //  { loggedIn, username, user_id }
   track.activeUser = MainService.state;
@@ -19,7 +20,10 @@ function TrackController(TrackService, ProfileService, MainService) {
   //  Check if today exists in database, set data accordingly
   track.checkForToday = () => {
     //  Search by user id and date.  Returns sum of data for date
+    console.log('User id:', track.activeUser.user_id);
+    console.log('Search date:', track.today);
     ProfileService.getLogByDate(track.activeUser.user_id, track.today).then(response => {
+      console.log('Check response:', response);
       if (response.length > 0) {
         track.editing = true;
         track.dayStats = response[0];
@@ -27,7 +31,6 @@ function TrackController(TrackService, ProfileService, MainService) {
       } else {
         track.editing = false;
         track.dayStats = {
-          user_id: track.activeUser.user_id,
           log_date: track.today
         }
       }
@@ -54,7 +57,8 @@ function TrackController(TrackService, ProfileService, MainService) {
       protein: null,
       fat: null,
       amount: null,
-      date: null
+      date: null,
+      user_id: track.activeUser.user_id
     }
   }
 
@@ -90,11 +94,25 @@ function TrackController(TrackService, ProfileService, MainService) {
       });
     } else {
       console.log('Current value of dayStats:', track.dayStats);
-      TrackService.postLog(track.pendingData).then(response => {
+      console.log('Current value of pendingData', track.pendingData);
+      TrackService.postLog(track.pendingData, track.today).then(response => {
         track.checkForToday();
       });
     }
     track.prepareEntry();
+  }
+
+  //  Toggle weight display and input
+  track.editWeight = () => {
+    track.showWeight = false;
+  }
+
+  //  Update user weight
+  track.updateWeight = () => {
+    TrackService.updateWeight(track.dayStats).then(response => {
+      track.showWeight = true;
+      track.checkForToday();
+    });
   }
 
 
@@ -106,13 +124,14 @@ function TrackController(TrackService, ProfileService, MainService) {
     //  Macronutrients may be manually entered, or automatically added for foods/recipes
     //  ! Provide a preview of new data before user approves it
     //  Foods and recipes will be added to a secondary table referencing the history table
-    //  Possibly create an array for this, allowing multiple foods and recipes to be added at once
     //  Add feature to remove logged items, as well as adjust daily log accordingly.
     //  Possibly edit daily numbers directly
     //  Add feature to edit previous days
     //  Update weight
 
   //  May import food/recipe from another path (DO LATER)
+
+  //  (OPTIONAL - FOR FUTURE) - Allow users to queue multiple items to add all at once
 
 
   //  Run function to set log values

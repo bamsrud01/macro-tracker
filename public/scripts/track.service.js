@@ -6,7 +6,8 @@ function TrackService($http) {
   let service = this;
 
   //  Post a new profile record
-  service.postLog = (logData) => {
+  service.postLog = (logData, logDate) => {
+    logData.log_date = logDate;
     console.log('Will POST new user record:', logData);
     return $http({
       method: 'POST',
@@ -31,10 +32,22 @@ function TrackService($http) {
     });
   }
 
+  service.updateWeight = (logData) => {
+    console.log('Will PUT to user record:', logData);
+    return $http({
+      method: 'PUT',
+      url: '/profiles/weight',
+      data: logData
+    }).then(response => {
+      console.log('SERVICE returned response:', response);
+      return response.data;
+    });
+  }
+
   //  Post a food item in user history
-  service.postFoodRecord = (logData) {
+  service.postFoodRecord = (logData) => {
     console.log('Will POST new logged food:', logData);
-    
+
   }
 
   //  Post a recipe item in user history

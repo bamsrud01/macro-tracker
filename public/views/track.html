@@ -1,8 +1,11 @@
 <h1>Track Route</h1>
 <div>
   <h3>Log for {{track.dayStats.log_date}}</h3>
-  <p>Current Weight: {{track.dayStats.weight}}</p>
+  <p ng-show="track.showWeight">Current Weight: {{track.dayStats.weight}}</p>
   <!-- Update weight -->
+  <button ng-show="track.showWeight" ng-click="track.editWeight()">Update Weight</button>
+  <input ng-hide="track.showWeight" type="text" ng-model="track.dayStats.weight" placeholder="Current Weight" />
+  <button ng-hide="track.showWeight" ng-click="track.updateWeight()">Submit Weight</button>
   <p>Today's Calories: {{track.dayStats.calories}}</p>
   <p>Today's Net Carbs: {{track.dayStats.carbs}} g</p>
   <p>Today's Protein: {{track.dayStats.protein}} g</p>

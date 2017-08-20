@@ -104,6 +104,33 @@ router.put('/date', function(req, res) {
   });
 });
 
+//  Put user weight record
+router.put('/weight', function(req, res) {
+  const { weight, id } = req.body;
+  pool.connect(function(err, client, done) {
+    try {
+      if (err) {
+        console.log('Error connecting to database:', err);
+        res.sendStatus(500);
+        return;
+      }
+      client.query('UPDATE history SET weight=$1 WHERE id=$2 RETURNING *',
+      [weight, id],
+      function (err, result) {
+        if (err) {
+          console.log('Error querying database:', err);
+          res.sendStatus(500);
+          return;
+        }
+        console.log('Returning rows (put /profiles/weight):', result.rows);
+        res.send(result.rows);
+      });
+    } finally {
+      done();
+    }
+  });
+});
+
 /*  DELETE requests  */
 
 
