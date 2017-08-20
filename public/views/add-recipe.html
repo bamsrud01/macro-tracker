@@ -6,7 +6,17 @@
 </div>
 <div>
   <div ng-repeat="ingredient in add.ingredientsList">
-    <h4>{{ingredient.food_name}} <span ng-show="ingredient.food_amount">- </span>{{ingredient.food_amount}}</h4>
+    <h4 ng-hide="ingredient.editing">{{ingredient.food_name}} <span ng-show="ingredient.food_amount">- </span>{{ingredient.food_amount}}</h4>
+    <button ng-click="add.beginIngredientEdit(ingredient)">Edit</button>
+    <div ng-show="ingredient.editing">
+      <input type="text" ng-model="add.updatedIngredient.name" placeholder="Ingredient Name"/>
+      <input type="text" ng-model="add.updatedIngredient.amount" placeholder="Quantity (optional)" />
+      <button ng-show="add.canCreate" ng-click="add.updateNewIngredient(ingredient)">Save</button>
+      <button ng-show="add.canUpdate" ng-click="add.updateExistingIngredient(ingredient)">Save</button>
+      <button ng-click="add.cancelIngredientChange()">Cancel</button>
+    </div>
+    <button ng-show="add.canCreate" ng-click="add.deleteNewIngredient($index)">Delete</button>
+    <button ng-show="add.canUpdate" ng-click="add.deleteExistingIngredient(ingredient)">Delete</button>
   </div>
   <button ng-hide="add.showForm" ng-click="add.showForm = true">Add Ingredient</button>
   <input ng-show="add.showForm" type="text" ng-model="add.newIngredient.name" placeholder="Name" />

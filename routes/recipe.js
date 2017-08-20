@@ -182,7 +182,7 @@ router.put('/', function(req, res) {
 
 //  Update ingredients for recipes (UNTESTED)
 router.put('/ingredient', function(req, res) {
-  const { id, name, variety, brand, serving, calories, carbs, fiber, protein, fat } = req.body;
+  const { id, food_name, food_amount } = req.body;
   pool.connect(function(err, client, done) {
     try {
       if (err) {
@@ -190,8 +190,8 @@ router.put('/ingredient', function(req, res) {
         res.sendStatus(500);
         return;
       }
-      client.query('',
-      [],
+      client.query('UPDATE ingredients SET food_name=$1, food_amount=$2 WHERE id=$3',
+      [food_name, food_amount, id],
       function (err, result) {
         if (err) {
           console.log('Error querying database:', err);
@@ -252,7 +252,7 @@ router.delete('/ingredient', function(req, res) {
           res.sendStatus(500);
           return;
         }
-        console.log('Deleted food');
+        console.log('Deleted ingredient');
         res.sendStatus(204);
       });
     } finally {

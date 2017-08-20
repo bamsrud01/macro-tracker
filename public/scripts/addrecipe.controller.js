@@ -16,6 +16,7 @@ function AddRecipeController(AddRecipeService, RecipeService, MainService, $loca
   //  Contains add.ingredientsList [{ingredient_data}]
   //  Contains add.activeRecipeId
   add.ingredientsList = [];
+  add.updatedIngredient = {};
 
   // If an existing recipe, populate fields
   if (AddRecipeService.existingRecipe) {
@@ -74,7 +75,7 @@ function AddRecipeController(AddRecipeService, RecipeService, MainService, $loca
       console.log('Success!  Recipe updated:', response);
       //  Compare ingredients
       add.newRecipe = emptyRecipe;
-    })
+    });
   }
 
   //  Add ingredient to array and clear fields
@@ -91,6 +92,55 @@ function AddRecipeController(AddRecipeService, RecipeService, MainService, $loca
     add.newIngredient.name = '';
     add.newIngredient.amount = '';
     add.showForm = false;
+  }
+
+  //  Populate form when beginning to edit ingredient
+  add.beginIngredientEdit = (ingredient) => {
+    console.log('getting ingredient:', ingredient);
+    add.updatedIngredient.name = ingredient.food_name;
+    add.updatedIngredient.amount = ingredient.food_amount;
+    ingredient.editing = true;
+  }
+
+  //  Edit ingredient before creation
+  add.updateNewIngredient = (ingredient) => {
+    ingredient.food_name = add.updatedIngredient.name;
+    ingredient.food_amount = add.updatedIngredient.amount;
+    ingredient.editing = false;
+  }
+
+  //  Edit ingredient after creation
+  add.updateExistingIngredient = (ingredient) => {
+    ingredient.food_name = add.updatedIngredient.name;
+    ingredient.food_amount = add.updatedIngredient.amount;
+    //  Update in service
+    console.log('Sending ingredient to update:', ingredient);
+    AddRecipeService.updateIngredient(ingredient).then(response => {
+      console.log('Success!  Ingredient updated:', response);
+    });
+    ingredient.editing = false;
+  }
+
+  //  Delete ingredient before creation
+  add.deleteNewIngredient = (index) => {
+    add.ingredientsList.splice(index, 1);
+  }
+
+  //  Delete ingredient after creation
+  add.deleteExistingIngredient = (ingredient) => {
+
+    AddRecipeService.deleteIngredient(ingredient.id).then(() => {
+      console.log('Success!  Ingredient deleted');
+    });
+    RecipeService.getIngredients(add.newRecipe.id).then(response => {
+      add.ingredientsList = response;
+    });
+  }
+
+  //  Cancel all changes on ingredient
+  add.cancelIngredientChange = () => {
+    add.updatedIngredient = {};
+    add.editing = false;
   }
 
   //  Function to post ingredients array data

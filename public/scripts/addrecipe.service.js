@@ -47,4 +47,27 @@ function AddRecipeService($http) {
     });
   }
 
+  //  Update an ingredient
+  service.updateIngredient = (ingredientData) => {
+    return $http({
+      method: 'PUT',
+      url: '/recipe/ingredient',
+      data: ingredientData
+    }).then(response => {
+      return response.data;
+    });
+  }
+
+  //  Delete an ingredient
+  service.deleteIngredient = (ingredientId) => {
+    return $http.delete('/recipe/ingredient', {
+      params: {
+        ingredientId
+      }
+    }).then(response => {
+      console.log('Received response:', response);
+      return;
+    });
+  }
+
 }
