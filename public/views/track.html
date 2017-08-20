@@ -1,11 +1,25 @@
 <h1>Track Route</h1>
 <div>
   <h3>Today's Log</h3>
-  <input type="text" ng-model="track.logItem.weight" placeholder="Current Weight (lbs/kg)" />
-  <input type="number" ng-model="track.logItem.calories" placeholder="Calories" />
-  <input type="number" ng-model="track.logItem.carbs" placeholder="Net Carbs (g)" />
-  <input type="number" ng-model="track.logItem.protein" placeholder="Protein (g)" />
-  <input type="number" ng-model="track.logItem.fat" placeholder="Fat (g)" />
+  <p>Current Weight: {{track.dayStats.weight}}</p>
+  <!-- Update weight -->
+  <p>Today's Calories: {{track.dayStats.calories}}</p>
+  <p>Today's Net Carbs: {{track.dayStats.carbs}} g</p>
+  <p>Today's Protein: {{track.dayStats.protein}} g</p>
+  <p>Today's Fat: {{track.dayStats.fat}} g</p>
+  <h3>Today's Logged items</h3>
+  <!-- NG-repeat of track.loggedItems -->
+</div>
+<div ng-show="track.pendingData.shown">
+  <h4>Pending Data</h4>
+    <!-- Only show if user logging an existing item. -->
+    <h6>FOODS: name, variety, serving, brand, author (from user_id)</h6>
+    <h6>RECIPES: name, serving, author, (later add option to expand ingredients)</h6>
+  <label>Calories (g)</label><input type="number" ng-model="track.pendingData.calories"/>
+  <label>Net Carbs (g)</label><input type="number" ng-model="track.pendingData.carbs"/>
+  <label>Protein (g)</label><input type="number" ng-model="track.pendingData.protein"/>
+  <label>Fat (g)</label><input type="number" ng-model="track.pendingData.fat"/>
+  <!-- Amount -->
   <button ng-click="track.submitRecord()">Submit</button>
 </div>
 <div>

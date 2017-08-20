@@ -1,17 +1,19 @@
-/*  TO-DO
-- Home
+/*  TO-DO - PRIORITY
+- Ingredients
+- Log
+  - Add Item to History
+  - Delete From History
 - Register
+- Profile
+  - Display
+- View Item (recipe and food)
+
+
+TO-DO - SECONDARY
+- Home
 - Recipe
   - Update
   - Delete
-- Ingredients
-- Profile
-  - Display
-- View
-- Log
-  - Get History
-  - Add Item to History
-  - Delete From History
 - Favorites
 - Comments on foods
   - Get
@@ -28,6 +30,7 @@
   - Add
   - Update
   - Delete
+- Images
 
 
 DONE
@@ -37,9 +40,11 @@ DONE
   - Update
   - Delete
 - Recipe
-  -Get
+  - Get
   - Add
 - Add Item
+- Log
+  - Get History
 */
 
 angular.module('macrotrack')

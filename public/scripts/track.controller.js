@@ -11,28 +11,19 @@ function TrackController(TrackService, ProfileService, MainService) {
   //  { loggedIn, username, user_id }
   track.activeUser = MainService.state;
 
-  //  track.logItem = { user_id, log_date, weight, calories, carbs, protein, fat }
-  //  track.entryData = { shown, itemId, calories, carbs, protein, fat, amount, date }
-  track.entryData = {
-    shown: false,
-    itemId: null,
-    calories: 0,
-    carbs: 0,
-    protein: 0,
-    fat: 0,
-    amount: 0,
-    date: null
-  }
+  //  track.dayStats = { user_id, log_date, weight, calories, carbs, protein, fat }
 
   //  Check if today exists in database, set data accordingly
   track.checkForToday = () => {
     ProfileService.getLogByDate(track.activeUser.user_id, track.today).then(response => {
       if (response.length > 0) {
         track.editing = true;
-        track.logItem = response[0];
+        track.dayStats = response[0];
+        track.pendingData.id = track.dayStats.id;
+        track.displayLoggedItems();
       } else {
         track.editing = false;
-        track.logItem = {
+        track.dayStats = {
           user_id: track.activeUser.user_id,
           log_date: track.today
         }
@@ -42,18 +33,40 @@ function TrackController(TrackService, ProfileService, MainService) {
     });
   }
 
+  //  Get all items logged for the day
+  track.displayLoggedItems = () => {
+    console.log('GETTING ITEMS (code incomplete)');
+    //  Will store response in track.loggedItems
+  }
+
+  //  Prepare data for a new logged item
+  track.prepareEntry = (itemType) => {
+    console.log(itemType);
+    track.pendingData = {
+      shown: true,
+      itemId: null,
+      calories: null,
+      carbs: null,
+      protein: null,
+      fat: null,
+      amount: null,
+      date: null
+    }
+  }
+
   //  Submit or update record
+  //  MAY NO LONGER BE ACCURATE.  Check where data should be coming from
   track.submitRecord = () => {
     if (track.editing) {
-      TrackService.updateLog(track.logItem).then(response => {
+      TrackService.updateLog(track.pendingData).then(response => {
         console.log('Log response:', response);
-        checkForToday();
+        track.checkForToday();
       });
     } else {
-      console.log('Current value of logItem:', track.logItem);
-      TrackService.postLog(track.logItem).then(response => {
+      console.log('Current value of dayStats:', track.dayStats);
+      TrackService.postLog(track.pendingData).then(response => {
         console.log('Log response:', response);
-        checkForToday();
+        track.checkForToday();
       });
     }
   }
@@ -76,5 +89,6 @@ function TrackController(TrackService, ProfileService, MainService) {
 
   //  Run function to set log values
   track.checkForToday();
+  track.prepareEntry(null);
 
 }
