@@ -17,4 +17,15 @@ function FoodService($http) {
     });
   }
 
+  //  Get a specific food by id
+  service.getOneFood = (foodId) => {
+    return $http.get('/food/byId', {
+      params: {
+        id: foodId
+      }
+    }).then(response => {
+      return response.data;
+    });
+  }
+
 }

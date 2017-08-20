@@ -13,4 +13,15 @@ function RecipeService($http) {
     });
   }
 
+  //  Get a specific recipe by id
+  service.getOneRecipe = (recipeId) => {
+    return $http.get('/recipe/byId', {
+      params: {
+        id: recipeId
+      }
+    }).then(response => {
+      return response.data;
+    });
+  }
+
 }

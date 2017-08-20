@@ -2,7 +2,7 @@ angular.module('macrotrack')
   .controller('TrackController', TrackController);
 
 //  Manages adding foods / recipes to user log
-function TrackController(TrackService, ProfileService, MainService) {
+function TrackController(TrackService, ProfileService, FoodService, RecipeService, MainService) {
 
   let track = this;
 
@@ -45,9 +45,15 @@ function TrackController(TrackService, ProfileService, MainService) {
   }
 
   //  Prepare data for a new logged item - MAY NEED ADJUSTMENT
-  track.prepareEntry = (itemType) => {
+  track.prepareEntry = (itemType, itemId) => {
     console.log('Item type:', itemType);
-    //  If item types, get item information to display
+    if (itemType = 'food') {
+      getFoodInformation(itemId);
+    } else if (itemType = 'recipe') {
+      getRecipeInformation(itemId);
+    } else {
+      clearInformation();
+    }
     //  If not, clear receivedItemInformation and itemInformation
     track.pendingData = {
       shown: true,    //  Possible turn off later
@@ -77,6 +83,21 @@ function TrackController(TrackService, ProfileService, MainService) {
     forSubmission.fat = unToZero(track.dayStats.fat, track.pendingData.fat);
 
     return forSubmission;
+  }
+
+  //  Get information for items to submit and clear information
+  function getFoodInformation(foodId) {
+    FoodService.getOneFood(foodId).then(response => {
+      console.log('Track got food data:', response[0]);
+    });
+  }
+  function getRecipeInformation(recipeId) {
+    RecipeService.getOneRecipe(recipeId).then(response => {
+      console.log('Track got recipe data:', response[0]);
+    });
+  }
+  function clearInformation() {
+
   }
 
   //  Submit or update record
@@ -127,7 +148,7 @@ function TrackController(TrackService, ProfileService, MainService) {
     //  Add feature to remove logged items, as well as adjust daily log accordingly.
     //  Possibly edit daily numbers directly
     //  Add feature to edit previous days
-    //  Update weight
+    //  ! Update weight
 
   //  May import food/recipe from another path (DO LATER)
 
@@ -137,5 +158,7 @@ function TrackController(TrackService, ProfileService, MainService) {
   //  Run function to set log values
   track.checkForToday();
   track.prepareEntry();
+  getFoodInformation(1);
+  getRecipeInformation(3);
 
 }
