@@ -48,7 +48,6 @@ router.get('/date', function(req, res) {
 //  Post user date record
 router.post('/date', function(req, res) {
   const { user_id, log_date, weight, calories, carbs, protein, fat } = req.body;
-  console.log('In post.  User id:', user_id);
   pool.connect(function(err, client, done) {
     try {
       if (err) {
@@ -66,7 +65,63 @@ router.post('/date', function(req, res) {
           return;
         }
         console.log('Returning rows:', result.rows);
-        res.send(result.rows);  //  Or status code
+        res.send(result.rows);
+      });
+    } finally {
+      done();
+    }
+  });
+});
+
+//  Post user food record
+router.post('/logFood', function(req, res) {
+  const { user_id, log_id, item_id, amount, log_date } = req.body;
+  pool.connect(function(err, client, done) {
+    try {
+      if (err) {
+        console.log('Error connecting to database:', err);
+        res.sendStatus(500);
+        return;
+      }
+      client.query('INSERT INTO log_foods (user_id, log_id, food_id, amount, log_date) ' +
+      'VALUES ($1, $2, $3, $4, $5) RETURNING *',
+      [user_id, log_id, item_id, amount, log_date],
+      function (err, result) {
+        if (err) {
+          console.log('Error querying database:', err);
+          res.sendStatus(500);
+          return;
+        }
+        console.log('Returning rows:', result.rows);
+        res.send(result.rows);
+      });
+    } finally {
+      done();
+    }
+  });
+});
+
+//  Post user recipe record
+router.post('/logRecipe', function(req, res) {
+  const { user_id, log_id, item_id, amount, log_date } = req.body;
+  pool.connect(function(err, client, done) {
+    try {
+      if (err) {
+        console.log('Error connecting to database:', err);
+        res.sendStatus(500);
+        return;
+      }
+      client.query('INSERT INTO log_recipes (user_id, log_id, recipe_id, amount, log_date) ' +
+      'VALUES ($1, $2, $3, $4, $5) RETURNING *',
+      [user_id, log_id, item_id, amount, log_date],
+      function (err, result) {
+        if (err) {
+          console.log('Error querying database:', err);
+          res.sendStatus(500);
+          return;
+        }
+        console.log('Returning rows:', result.rows);
+        res.send(result.rows);
       });
     } finally {
       done();

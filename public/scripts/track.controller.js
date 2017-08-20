@@ -13,8 +13,6 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
   track.activeUser = MainService.state;
 
   //  track.dayStats = { user_id, log_date, weight, calories, carbs, protein, fat }
-  //  track.receivedItemInformation = { name, variety, serving, brand, author, id }
-  //  track.itemInformation = { user_id, log_id, item_id, amount, log_date }
   //  track.updatedWeight = { user_id, log_date, weight }
 
   //  Check if today exists in database, set data accordingly
@@ -54,7 +52,7 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
     } else {
       clearInformation();
     }
-    //  If not, clear receivedItemInformation and itemInformation
+    //  If not, clear itemInformation
     track.pendingData = {
       shown: true,    //  Possible turn off later
       type: itemType,
@@ -92,6 +90,7 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
       console.log('Track got food data:', response[0]);
       track.receivedInformation = {
         type: 'food',
+        itemId: response[0].id,
         name: response[0].name,
         variety: response[0].variety,
         serving: response[0].serving,
@@ -107,6 +106,7 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
       console.log('Track got recipe data:', response[0]);
       track.receivedInformation = {
         type: 'recipe',
+        itemId: response[0].id,
         name: response[0].name,
         serving: response[0].serving
       }
@@ -129,24 +129,44 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
   //  Submit or update record
     //  Idea: Pending should not be editable unless button is clicked to adjust
   track.submitRecord = () => {
-    if (track.pendingData.type == 'food') {
-      //  Add item to log_foods table using track.receivedItemInformation
-    }
-    if (track.pendingData.type == 'recipe') {
-      //  Add item to log_recipes table using track.receivedItemInformation
+    var itemInfo = {
+      data: track.pendingData,
+      itemId: track.receivedInformation.itemId
     }
     if (track.editing) {
       TrackService.updateLog(calculateSums(track.dayStats.id)).then(response => {
+        track.logItem(response[0].id, itemInfo);
         track.checkForToday();
       });
     } else {
-      console.log('Current value of dayStats:', track.dayStats);
-      console.log('Current value of pendingData', track.pendingData);
       TrackService.postLog(track.pendingData, track.today).then(response => {
+        track.logItem(response[0].id, itemInfo);
         track.checkForToday();
       });
     }
     track.prepareEntry();
+  }
+
+  track.logItem = (logId, itemInfo) => {
+    var recordData = {
+      user_id: track.activeUser.user_id,
+      log_id: logId,
+      item_id: itemInfo.itemId,
+      amount: 1,
+      log_date: new Date().toString(),
+    }
+    if (itemInfo.data.type == 'food') {
+      //  Add item to log_foods table using track.receivedItemInformation
+      TrackService.postFoodRecord(recordData).then(
+        //  Reset item selection?
+      );
+    }
+    if (itemInfo.data.type == 'recipe') {
+      //  Add item to log_recipes table using track.receivedItemInformation
+      TrackService.postRecipeRecord(recordData).then(
+        //  Reset item selection?
+      );
+    }
   }
 
   //  Toggle weight display and input
@@ -182,6 +202,6 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
 
   //  Run function to set log values
   track.checkForToday();
-  track.prepareEntry();
+  track.prepareEntry('food', 1);
 
 }
