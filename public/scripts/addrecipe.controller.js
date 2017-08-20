@@ -2,24 +2,30 @@ angular.module('macrotrack')
   .controller('AddRecipeController', AddRecipeController);
 
 //  Manages CRUD operations on recipes
-function AddRecipeController(AddRecipeService, MainService, $location) {
+function AddRecipeController(AddRecipeService, RecipeService, MainService, $location) {
 
   let add = this;
+
+  //  Redirect to view upon creation / update
+
+  add.showForm = true;
+  add.canCreate = true;
+  add.canUpdate = false;
 
   //  Contains add.newRecipe {recipe_data}
   //  Contains add.ingredientsList [{ingredient_data}]
   //  Contains add.activeRecipeId
-  add.ingredientsList = [{
-    food_name: 'Apple',
-    food_amount: '2 slices'
-  }, {
-    food_name: 'Salt'
-  }];
+  add.ingredientsList = [];
 
   // If an existing recipe, populate fields
   if (AddRecipeService.existingRecipe) {
+    add.canCreate = false;
+    add.canUpdate = true;
     add.newRecipe = AddRecipeService.recipeToEdit;
     AddRecipeService.existingRecipe = false;
+    RecipeService.getIngredients(add.newRecipe.id).then(response => {
+      add.ingredientsList = response;
+    });
   }
 
   //  Set mode to display buttons for Add, or for Update and Delete
@@ -45,7 +51,7 @@ function AddRecipeController(AddRecipeService, MainService, $location) {
   };
 
   //  Function to submit a new recipe
-  //  NOTE: Submit to recipes and foods_recipes
+  //  NOTE: Submit to recipes and ingredients
   add.submitNewRecipe = () => {
     if (MainService.state.loggedIn && add.newRecipe.name && add.newRecipe.directions && add.ingredientsList.length > 0) {
       add.newRecipe.user_id = MainService.state.user_id;
@@ -60,6 +66,31 @@ function AddRecipeController(AddRecipeService, MainService, $location) {
     } else {
       console.log('Error!  Check required fields');
     }
+  }
+
+  //  Function to update a recipe
+  add.updateRecipe = () => {
+    AddRecipeService.updateRecipe(add.newRecipe).then(response => {
+      console.log('Success!  Recipe updated:', response);
+      //  Compare ingredients
+      add.newRecipe = emptyRecipe;
+    })
+  }
+
+  //  Add ingredient to array and clear fields
+  add.saveIngredient = () => {
+    add.ingredientsList.push({
+      food_name: add.newIngredient.name,
+      food_amount: add.newIngredient.amount
+    });
+    add.cancel();
+  }
+
+  //  Cancel ingredient and clear fields
+  add.cancel = () => {
+    add.newIngredient.name = '';
+    add.newIngredient.amount = '';
+    add.showForm = false;
   }
 
   //  Function to post ingredients array data

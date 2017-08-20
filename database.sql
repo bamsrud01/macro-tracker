@@ -45,11 +45,9 @@ CREATE TABLE recipes (
   source_url varchar(120)
 );
 
--- CONSIDERING:  Remove the food_id field.  Instead, app searches and displays matching foods for reference, but user need not directly link them.
+-- App searches and displays matching foods for reference, but user need not directly link them.
 -- All rows must have a food_name.
 -- food_amount encouraged, but not required.
--- If user elects to link a food_id, it will link (POSSIBLE REMOVAL).
--- Regardless of linking food
 CREATE TABLE ingredients (
   id SERIAL PRIMARY KEY,
   recipe_id INT NOT NULL,

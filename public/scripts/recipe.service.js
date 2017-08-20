@@ -24,4 +24,16 @@ function RecipeService($http) {
     });
   }
 
+  //  Get ingredients for recipe
+  service.getIngredients = (recipeId) => {
+    return $http.get('/recipe/ingredient', {
+      params: {
+        id: recipeId
+      }
+    }).then(response => {
+      console.log(response.data);
+      return response.data;
+    });
+  }
+
 }

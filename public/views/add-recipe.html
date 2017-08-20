@@ -2,8 +2,17 @@
 <div>
   <h3>Required Fields</h3>
   <input type="text" ng-model="add.newRecipe.name" placeholder="Name"/>
-  <!-- Ingredients list (dummy data for now) -->
   <textarea rows="10" cols="50" ng-model="add.newRecipe.directions" placeholder="Directions"></textarea>
+</div>
+<div>
+  <div ng-repeat="ingredient in add.ingredientsList">
+    <h4>{{ingredient.food_name}} <span ng-show="ingredient.food_amount">- </span>{{ingredient.food_amount}}</h4>
+  </div>
+  <button ng-hide="add.showForm" ng-click="add.showForm = true">Add Ingredient</button>
+  <input ng-show="add.showForm" type="text" ng-model="add.newIngredient.name" placeholder="Name" />
+  <input ng-show="add.showForm" type="text" ng-model="add.newIngredient.amount" placeholder="Amount (optional)" />
+  <button ng-show="add.showForm" ng-click="add.saveIngredient()">Save</button>
+  <button ng-show="add.showForm" ng-click="add.cancel()">Cancel</button>
 </div>
 <div>
   <h3>Optional Fields</h3>
@@ -19,5 +28,6 @@
 
 </div>
 <div>
-  <button ng-click="add.submitNewRecipe()">Submit Recipe</button>
+  <button ng-show="add.canCreate" ng-click="add.submitNewRecipe()">Submit Recipe</button>
+  <button ng-show="add.canUpdate" ng-click="add.updateRecipe()">Update Recipe</button>
 </div>

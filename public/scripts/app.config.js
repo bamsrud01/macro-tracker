@@ -1,5 +1,8 @@
 /*  TO-DO - PRIORITY
 - Ingredients
+  - Update
+  - Delete
+  - Compare when updating recipe
 - Log
   - Delete From History (with adjustment to log)
 - Register
@@ -40,6 +43,8 @@ DONE
   - Add
   - Update
   - Delete
+- Ingredients
+  - Add
 - Recipe
   - Get
   - Add

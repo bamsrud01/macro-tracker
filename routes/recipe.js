@@ -65,6 +65,32 @@ router.get('/byId', function(req, res) {
   });
 });
 
+//  Get ingredients for recipe
+router.get('/ingredient', function(req, res) {
+  const { id } = req.query;
+  pool.connect(function(err, client, done) {
+    try {
+      if (err) {
+        console.log('Error connecting to database:', err);
+        res.sendStatus(500);
+        return;
+      }
+      client.query('SELECT * FROM ingredients WHERE recipe_id=$1',
+      [id], function(err, result) {
+        if (err) {
+          console.log('Error querying database:', err);
+          res.sendStatus(500);
+          return;
+        }
+        console.log('Got rows from "foods":', result.rows);
+        res.send(result.rows);
+      });
+    } finally {
+      done();
+    }
+  });
+});
+
 /*  POST requests  */
 
 //  Post a new recipe
@@ -127,7 +153,7 @@ router.post('/ingredient', function(req, res) {
 
 //  Update a recipe (UNTESTED)
 router.put('/', function(req, res) {
-  const {  } = req.body;
+  const { name, serving, calories, carbs, fiber, protein, fat, user_id, directions, source, source_url, id } = req.body;
   pool.connect(function(err, client, done) {
     try {
       if (err) {
@@ -135,8 +161,10 @@ router.put('/', function(req, res) {
         res.sendStatus(500);
         return;
       }
-      client.query('',
-      [],
+      client.query('UPDATE recipes SET name=$1, serving=$2, calories=$3, ' +
+      'carbs=$4, fiber=$5, protein=$6, fat=$7, user_id=$8, directions=$9, ' +
+      'source=$10, source_url=$11 WHERE id=$12',
+      [name, serving, calories, carbs, fiber, protein, fat, user_id, directions, source, source_url, id],
       function (err, result) {
         if (err) {
           console.log('Error querying database:', err);

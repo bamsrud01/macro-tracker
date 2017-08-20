@@ -22,6 +22,18 @@ function AddRecipeService($http) {
     });
   }
 
+  //  Update an existing recipe
+  service.updateRecipe = (recipeData) => {
+    return $http({
+      method: 'PUT',
+      url: '/recipe',
+      data: recipeData
+    }).then(response => {
+      console.log('SERVICE received response:', response);
+      return response.data;
+    });
+  }
+
   //  Post an ingredient to the database
   service.submitIngredient = (ingredientData) => {
     console.log('Will POST ingredient data', ingredientData);
