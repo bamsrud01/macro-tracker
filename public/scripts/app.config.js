@@ -1,8 +1,6 @@
 /*  TO-DO - PRIORITY
 - Ingredients
-  - Update
-  - Delete
-  - Compare when updating recipe
+  - Add ingredient on recipe update
 - Log
   - Delete From History (with adjustment to log)
 - Register
@@ -14,6 +12,9 @@
 TO-DO - SECONDARY
 - Home
 - Recipe
+  - Update
+  - Delete
+- Ingredients
   - Update
   - Delete
 - Favorites
