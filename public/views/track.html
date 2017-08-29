@@ -34,8 +34,22 @@
 <div ng-show="track.pendingData.shown">
   <h4>Pending Data</h4>
     <!-- Only show if user logging an existing item. -->
-    <h6>FOODS: name, variety, serving, brand, author (from user_id)</h6>
-    <h6>RECIPES: name, serving, author, (later add option to expand ingredients)</h6>
+    <div ng-show="track.receivedInformation.type == 'food'">
+      <h5>{{track.receivedInformation.name}}</h5>
+      <h6>
+        <span ng-show="track.receivedInformation.variety">Variety: {{track.receivedInformation.variety}}</span>
+        <span ng-show="track.receivedInformation.serving">Serving: {{track.receivedInformation.serving}}</span>
+        <span ng-show="track.receivedInformation.brand">Brand: {{track.receivedInformation.brand}}</span>
+        <span ng-show="track.receivedInformation.user_id">Author(id): {{track.receivedInformation.user_id}}</span>
+      </h6>
+    </div>
+    <div ng-show="track.receivedInformation.type == 'recipe'">
+      <h5>{{track.receivedInformation.name}}</h5>
+      <h6>
+        <span ng-show="track.receivedInformation.serving">Serving: {{track.receivedInformation.serving}}</span>
+        <span ng-show="track.receivedInformation.user_id">Author(id): {{track.receivedInformation.user_id}}</span>
+      </h6>
+    </div>
   <label>Calories (g)</label><input type="number" ng-model="track.pendingData.calories"/>
   <label>Net Carbs (g)</label><input type="number" ng-model="track.pendingData.carbs"/>
   <label>Protein (g)</label><input type="number" ng-model="track.pendingData.protein"/>

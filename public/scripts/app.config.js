@@ -36,6 +36,7 @@ TO-DO - SECONDARY
 - Log
   - View existing logged items
 - Images
+- Show usernames in place of ID (track, foods, recipes, view, profile, comments)
 
 
 DONE
