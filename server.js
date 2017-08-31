@@ -2,10 +2,15 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const connection = require('./db/connection');
 const auth = require('./auth/setup');
 const passport = require('passport');
 const session = require('express-session');
 //  require('dotenv').config(); //  Wait until sure about purpose
+
+//  Set up
+connection.connect();
+auth.setup();
 
 //  Declare Express app
 const app = express();
@@ -14,6 +19,8 @@ const app = express();
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 //  Create routes
 const authRoute = require('./routes/auth');

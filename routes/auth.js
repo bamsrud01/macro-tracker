@@ -14,6 +14,8 @@ const pool = require('../db/connection');
 
 /*  GET requests  */
 
+/*  POST requests  */
+
 //  Register a new user
 router.post('/', function(req, res) {
   const { username, password, email, shared } = req.body;
@@ -26,7 +28,11 @@ router.post('/', function(req, res) {
   });
 });
 
-/*  POST requests  */
+//  Login a user
+router.post('/login', passport.authenticate('local'), function(req, res) {
+  console.log('Logging in a user');
+  res.sendStatus(200);
+});
 
 /*  PUT requests  */
 

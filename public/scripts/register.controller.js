@@ -6,6 +6,9 @@ function RegisterController(RegisterService, MainService) {
 
   let register = this;
 
+  /*  DELETE register.loginData, register.loginUser()  */
+  /*  They belong elsewhere  */
+
   //  register.newUser = { username, password, email, shared }
   register.newUser = {
     shared: false
@@ -15,6 +18,16 @@ function RegisterController(RegisterService, MainService) {
   register.submitUser = () => {
     RegisterService.submitUser(register.newUser).then(() => {
       register.newUser = { shared: false }
+    });
+  }
+
+  //  Will hold login information
+  register.loginData = {};
+
+  //  Function to log in user
+  register.loginUser = () => {
+    RegisterService.loginUser(register.loginData).then(() => {
+      register.loginData = {};
     });
   }
 
