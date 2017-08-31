@@ -17,7 +17,17 @@ function RegisterController(RegisterService, MainService) {
   //  Submit a new user
   register.submitUser = () => {
     RegisterService.submitUser(register.newUser).then(() => {
-      register.newUser = { shared: false }
+      RegisterService.loginUser(register.newUser).then(response => {
+        console.log('Returned user:', response);
+        MainService.state = {
+          loggedIn: true,
+          username: response.username,
+          user_id: response.id
+        }
+        console.log('Logged in user (in main service):', MainService.state);
+        register.newUser = { shared: false }
+        console.log('New user object:', register.newUser);
+      });
     });
   }
 
