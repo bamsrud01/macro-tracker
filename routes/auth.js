@@ -34,6 +34,13 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
   res.sendStatus(200);
 });
 
+//  Logout a user
+router.post('/logout', function(req, res) {
+  req.logout();
+  console.log('Loggin in a user');
+  res.sendStatus(200);
+});
+
 /*  PUT requests  */
 
 /*  DELETE requests  */

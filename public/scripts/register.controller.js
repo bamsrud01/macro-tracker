@@ -6,7 +6,7 @@ function RegisterController(RegisterService, MainService) {
 
   let register = this;
 
-  /*  DELETE register.loginData, register.loginUser()  */
+  /*  DELETE register.loginData, register.loginUser(), register.logoutUser()  */
   /*  They belong elsewhere  */
 
   //  register.newUser = { username, password, email, shared }
@@ -28,6 +28,13 @@ function RegisterController(RegisterService, MainService) {
   register.loginUser = () => {
     RegisterService.loginUser(register.loginData).then(() => {
       register.loginData = {};
+    });
+  }
+
+  //  Function to log out user
+  register.logoutUser = () => {
+    RegisterService.logoutUser().then(() => {
+      console.log('Logout successful!');
     });
   }
 

@@ -31,7 +31,14 @@ function RegisterService($http, $location, $q) {
     }, error => {
       console.log('Error logging in:', error);
       return $q.reject(error);
-    })
+    });
+  }
+
+  //  Logout a user
+  service.logoutUser = () => {
+    return $http.post('auth/logout').then(() => {
+      return $location.path('/home');
+    });
   }
 
 }
