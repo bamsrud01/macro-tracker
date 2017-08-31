@@ -29,13 +29,26 @@ app.use('/food', food);
 app.use('/profiles', profiles);
 app.use('/recipe', recipe);
 
+//  Declare port variable
+let port = process.env.PORT || 5000;
+
+/*  Authentication required beyond this point  */
+
+//  Ensure user is authenticated
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated) {
+    next();
+  } else {
+    res.sendStatus(401);
+  }
+}
+
+app.use(ensureAuthenticated);
+
 //  Set up public connection
 app.get('/*', function(req, res) {
   res.sendFile(path.join(__dirname, 'public/views/index.html'));
 });
-
-//  Declare port variable
-let port = process.env.PORT || 5000;
 
 //  Start express server
 let server = app.listen(port, function() {
