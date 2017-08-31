@@ -31,13 +31,14 @@ router.post('/', function(req, res) {
 //  Login a user
 router.post('/login', passport.authenticate('local'), function(req, res) {
   console.log('Logging in a user');
-  res.sendStatus(200);
+  res.send(req.user);
+  // res.sendStatus(200);
 });
 
 //  Logout a user
 router.post('/logout', function(req, res) {
   req.logout();
-  console.log('Loggin in a user');
+  console.log('Logging out a user');
   res.sendStatus(200);
 });
 

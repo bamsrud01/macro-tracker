@@ -26,8 +26,8 @@ function RegisterService($http, $location, $q) {
     return $http.post('/auth/login', {
       username: userData.username,
       password: userData.password
-    }).then(() => {
-      return $location.path('/home');
+    }).then((response) => {
+      return response.data;
     }, error => {
       console.log('Error logging in:', error);
       return $q.reject(error);
@@ -36,8 +36,8 @@ function RegisterService($http, $location, $q) {
 
   //  Logout a user
   service.logoutUser = () => {
-    return $http.post('auth/logout').then(() => {
-      return $location.path('/home');
+    return $http.post('auth/logout').then((response) => {
+      return response;
     });
   }
 

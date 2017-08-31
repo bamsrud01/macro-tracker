@@ -3,7 +3,6 @@
   - Add ingredient on recipe update
 - Log
   - Delete From History (with adjustment to log)
-- Register
 - Profile
   - Display
 - View Item (recipe and food)
@@ -40,6 +39,7 @@ TO-DO - SECONDARY
 
 
 DONE
+- Register
 - Food
   - Get
   - Add

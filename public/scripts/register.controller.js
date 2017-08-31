@@ -26,15 +26,23 @@ function RegisterController(RegisterService, MainService) {
 
   //  Function to log in user
   register.loginUser = () => {
-    RegisterService.loginUser(register.loginData).then(() => {
+    RegisterService.loginUser(register.loginData).then((response) => {
+      MainService.state.loggedIn = true;
+      console.log('Returned user:', response);
+      MainService.state.username = response.username;
+      MainService.state.user_id = response.id;
       register.loginData = {};
+      console.log('State:', MainService.state)
     });
   }
 
   //  Function to log out user
   register.logoutUser = () => {
-    RegisterService.logoutUser().then(() => {
+    RegisterService.logoutUser().then((response) => {
       console.log('Logout successful!');
+      MainService.state = { loggedIn: false }
+      console.log('State:', MainService.state);
+      console.log('Response:', response);
     });
   }
 

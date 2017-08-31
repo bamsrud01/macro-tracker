@@ -9,4 +9,9 @@ function MainService($http, $location) {
   //  Holds state object:
   //  service.state = { loggedIn, username, user_id }
 
+  service.getUsernameById = (id) => {
+    console.log('FILL ME IN!');
+    return 'PLACEHOLDER USERNAME';
+  }
+
 }
