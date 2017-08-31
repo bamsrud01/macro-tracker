@@ -63,7 +63,7 @@ function createUser(userData) {
         client.query('INSERT INTO users ' +
         '(username, password, email, shared) ' +
         'VALUES ($1, $2, $3, $4) RETURNING *',
-          [username, password, email, shared],
+          [username, hash, email, shared],
           function(err, result) {
             done();
             if (err) {

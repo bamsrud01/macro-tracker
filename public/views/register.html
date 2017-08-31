@@ -4,6 +4,12 @@
 
   <div id="user-registration">
     <h5>Registration</h5>
+    <h6>Create a Username</h6>
+    <input ng-model="register.newUser.username" placeholder="Username" />
+    <input ng-model="register.newUser.password" placeholder="Password" />
+    <input ng-model="register.newUser.email" placeholder="Email" />
+    <h6>Shared set to "false" by default</h6>
+    <button ng-click="register.submitUser()">Register</button>
   </div>
 
   <div id="user-login">

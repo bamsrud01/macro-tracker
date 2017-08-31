@@ -2,7 +2,7 @@
 const pg = require('pg');
 
 //  Set database
-var config= {
+var config = {
   database: 'macrotrack'
 };
 
