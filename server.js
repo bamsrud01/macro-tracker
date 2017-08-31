@@ -2,6 +2,10 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const auth = require('./auth/setup');
+const passport = require('passport');
+const session = require('express-session');
+//  require('dotenv').config(); //  Wait until sure about purpose
 
 //  Declare Express app
 const app = express();
