@@ -35,8 +35,11 @@ TO-DO - SECONDARY
   - Recipe to log
   - Food to edit
   - Recipe to edit
-  - Food to favorite
-  - Recipe to favorite
+  - Food to view
+  - Recipe to view
+  - View to favorite
+  - View to edit
+  - View to log
   - Favorite to log
   - Favorite to edit
 - Images
