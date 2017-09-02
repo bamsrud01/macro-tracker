@@ -43,8 +43,23 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
 
   //  Get all items logged for the day - UNFINISHED
   track.displayLoggedItems = () => {
-    console.log('GETTING ITEMS (code incomplete)');
-    //  Will store response in track.loggedItems
+    console.log('GETTING ITEMS');
+    console.log('Day Stats:', track.dayStats);
+    //  Fetch log items on date
+    TrackService.getLoggedItems(track.dayStats.user_id, track.dayStats.log_date).then(response => {
+      track.itemsToLog = response;
+      console.log('LoggedItems:', track.loggedItems);
+    });
+    track.getItemInformation();
+  }
+
+  //  Get information on items logged for the day
+  track.getItemInformation = () => {
+    //  Map through all in track.itemsToLog
+      //  Get for foods
+      //  Get for recipes
+      //  Get others
+    //  Store result in track.loggedItems
   }
 
   //  Prepare data for a new logged item - MAY NEED ADJUSTMENT
@@ -152,7 +167,7 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
       log_id: logId,
       item_id: itemInfo.itemId,
       amount: 1,
-      log_date: new Date().toString(),
+      log_date: track.logDate
     }
     if (itemInfo.data.type == 'food') {
       //  Add item to log_foods table using track.receivedItemInformation

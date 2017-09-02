@@ -5,6 +5,18 @@ function TrackService($http) {
 
   let service = this;
 
+  //  Get logged items by date
+  service.getLoggedItems = (userId, logDate) => {
+    return $http.get('/profiles/items', {
+      params: {
+        user_id: userId,
+        log_date: logDate
+      }
+    }).then(response => {
+      return response.data;
+    });
+  }
+
   //  Post a new profile record
   service.postLog = (logData, logDate) => {
     logData.log_date = logDate;

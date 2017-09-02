@@ -32,6 +32,8 @@ TO-DO - SECONDARY
   - Delete
 - Log
   - View existing logged items
+  - Link food to log
+  - Link recipe to log
 - Images
 - Show usernames in place of ID (track, foods, recipes, view, profile, comments)
 

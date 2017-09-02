@@ -35,6 +35,33 @@ router.get('/date', function(req, res) {
   });
 });
 
+//  Get logged items on date
+router.get('/items', function(req, res) {
+  const { user_id, log_date } = req.query;
+  pool.connect(function(err, client, done) {
+    try {
+      if (err) {
+        console.log('Error connecting to database:', err);
+        res.sendStatus(500);
+        return;
+      }
+      client.query('SELECT * FROM log_items ' +
+      'WHERE user_id=$1 AND log_date=$2 ORDER BY id',
+      [user_id, log_date], function(err, result) {
+        if (err) {
+          console.log('Error querying database:', err);
+          res.sendStatus(500);
+          return;
+        }
+        console.log('Got rows from database (get /profile/date):', result.rows);
+        res.send(result.rows);
+      });
+    } finally {
+      done();
+    }
+  });
+});
+
 /*  POST requests  */
 
 //  Post user date record
@@ -75,7 +102,7 @@ router.post('/logFood', function(req, res) {
         res.sendStatus(500);
         return;
       }
-      client.query('INSERT INTO log_foods (user_id, log_id, food_id, amount, log_date) ' +
+      client.query('INSERT INTO log_items (user_id, log_id, food_id, amount, log_date) ' +
       'VALUES ($1, $2, $3, $4, $5) RETURNING *',
       [user_id, log_id, item_id, amount, log_date],
       function (err, result) {
@@ -103,7 +130,7 @@ router.post('/logRecipe', function(req, res) {
         res.sendStatus(500);
         return;
       }
-      client.query('INSERT INTO log_recipes (user_id, log_id, recipe_id, amount, log_date) ' +
+      client.query('INSERT INTO log_items (user_id, log_id, recipe_id, amount, log_date) ' +
       'VALUES ($1, $2, $3, $4, $5) RETURNING *',
       [user_id, log_id, item_id, amount, log_date],
       function (err, result) {

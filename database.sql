@@ -96,22 +96,13 @@ CREATE TABLE history (
   fat INT,
 );
 
--- Related table for history, logging foods
-CREATE TABLE log_foods (
+-- Related table for history, logging foods and recipes
+CREATE TABLE log_items (
   id SERIAL PRIMARY KEY,
   user_id INT NOT NULL,
   log_id INT NOT NULL,
-  food_id INT NOT NULL,
-  amount INT NOT NULL,
-  log_date varchar(100) NOT NULL
-);
-
--- Related table for history, logging recipes
-CREATE TABLE log_recipes (
-  id SERIAL PRIMARY KEY,
-  user_id INT NOT NULL,
-  log_id INT NOT NULL,
-  recipe_id INT NOT NULL,
+  food_id INT,
+  recipe_id INT,
   amount INT NOT NULL,
   log_date varchar(100) NOT NULL
 );
