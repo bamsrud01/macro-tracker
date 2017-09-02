@@ -31,7 +31,15 @@
   <h3>Today's Logged items</h3>
   <!-- NG-repeat of track.loggedItems -->
   <div ng-repeat="item in track.loggedItems">
-    
+    <p>{{item.name}} | Servings: {{item.amount}}</p>
+    <h6>Serving size: {{item.serving || 'unknown'}}
+      Calories: {{item.calories || 'unknown'}}
+      Net Carbs: {{item.carbs - (item.fiber || 0) + 'g' || 'unknown'}}
+      Fat: {{item.fat + 'g' || 'unknown'}}
+      Protein: {{item.protein + 'g' || 'unknown'}}
+      <span ng-show="item.variety">Variety: {{item.variety}}</span>
+      <span ng-show="item.brand">Brand: {{item.brand}}</span>
+    </h6>
   </div>
 </div>
 <div ng-show="track.pendingData.shown">

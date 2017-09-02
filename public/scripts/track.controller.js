@@ -12,9 +12,7 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
   //  logdate is current day by default
   track.logDate = new Date().toDateString();
   track.showWeight = true;
-
-  //  { loggedIn, username, user_id }
-  track.activeUser = MainService.state;
+  track.activeUser = MainService.state;   //  { loggedIn, username, user_id }
 
   //  track.dayStats = { user_id, log_date, weight, calories, carbs, protein, fat }
 
@@ -48,18 +46,44 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
     //  Fetch log items on date
     TrackService.getLoggedItems(track.dayStats.user_id, track.dayStats.log_date).then(response => {
       track.itemsToLog = response;
-      console.log('LoggedItems:', track.loggedItems);
+      console.log('Logging:', track.itemsToLog);
+      track.loggedItems = [];
+      track.getItemInformation();
     });
-    track.getItemInformation();
   }
 
   //  Get information on items logged for the day
   track.getItemInformation = () => {
     //  Map through all in track.itemsToLog
+    track.itemsToLog.map(item => {
+      //  Check if item is a food or recipe
+      if (item.food_id) {
+        let itemAmount = item.amount;
+        FoodService.getOneFood(item.food_id).then(response => {
+          //  Add food properties to item
+          item = response[0];
+          item.amount = itemAmount;
+          item.type = 'food';
+          console.log('This is a food:', item);
+          track.loggedItems.push(item);
+        });
+      } else if (item.recipe_id) {
+        let itemAmount = item.amount;
+        RecipeService.getOneRecipe(item.recipe_id).then(response => {
+          //  Add recipe properties to item
+          item = response[0];
+          item.amount = itemAmount;
+          item.type = 'recipe';
+          console.log('This is a recipe:', item);
+          track.loggedItems.push(item);
+        });
+      } else {
+        console.log('This is neither a food nor a recipe');
+      }
+    });
       //  Get for foods
       //  Get for recipes
       //  Get others
-    //  Store result in track.loggedItems
   }
 
   //  Prepare data for a new logged item - MAY NEED ADJUSTMENT
