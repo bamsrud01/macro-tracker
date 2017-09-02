@@ -1,6 +1,4 @@
 /*  TO-DO - PRIORITY
-- Ingredients
-  - Add ingredient on recipe update
 - Log
   - Delete From History (with adjustment to log)
 - Profile
@@ -13,7 +11,7 @@ TO-DO - SECONDARY
 - Recipe
   - Update
   - Delete
-- Ingredients
+- Ingredients (might be done)
   - Update
   - Delete
 - Favorites
@@ -46,6 +44,7 @@ DONE
   - Update
   - Delete
 - Ingredients
+  - Add ingredient on recipe update
   - Add
 - Recipe
   - Get

@@ -21,8 +21,9 @@
   <button ng-hide="add.showForm" ng-click="add.showForm = true">Add Ingredient</button>
   <input ng-show="add.showForm" type="text" ng-model="add.newIngredient.name" placeholder="Name" />
   <input ng-show="add.showForm" type="text" ng-model="add.newIngredient.amount" placeholder="Amount (optional)" />
-  <button ng-show="add.showForm" ng-click="add.saveIngredient()">Save</button>
-  <button ng-show="add.showForm" ng-click="add.cancel()">Cancel</button>
+  <button ng-show="add.showForm && add.canCreate" ng-click="add.saveIngredient()">Save</button>
+  <button ng-show="add.canUpdate && add.showForm" ng-click="add.createNewIngredient()">Save</button>
+  <button ng-show="add.showForm" ng-click="add.clear()">Cancel</button>
 </div>
 <div>
   <h3>Optional Fields</h3>

@@ -8,7 +8,6 @@ function AddRecipeController(AddRecipeService, RecipeService, MainService, $loca
 
   //  Redirect to view upon creation / update
 
-  add.showForm = true;
   add.canCreate = true;
   add.canUpdate = false;
 
@@ -87,11 +86,25 @@ function AddRecipeController(AddRecipeService, RecipeService, MainService, $loca
     add.cancel();
   }
 
+  //  Create an ingredient on existing recipe
+  add.createNewIngredient = () => {
+    const newIngredientData = {
+      recipe_id: add.newRecipe.id,
+      food_name: add.newIngredient.name,
+      food_amount: add.newIngredient.amount
+    }
+    AddRecipeService.submitIngredient(newIngredientData).then(() => {
+      RecipeService.getIngredients(newIngredientData.recipe_id).then(response => {
+        add.ingredientsList = response;
+      });
+    });
+    add.clear();
+  }
+
   //  Cancel ingredient and clear fields
-  add.cancel = () => {
+  add.clear = () => {
     add.newIngredient.name = '';
     add.newIngredient.amount = '';
-    add.showForm = false;
   }
 
   //  Populate form when beginning to edit ingredient
@@ -128,7 +141,6 @@ function AddRecipeController(AddRecipeService, RecipeService, MainService, $loca
 
   //  Delete ingredient after creation
   add.deleteExistingIngredient = (ingredient) => {
-
     AddRecipeService.deleteIngredient(ingredient.id).then(() => {
       console.log('Success!  Ingredient deleted');
     });

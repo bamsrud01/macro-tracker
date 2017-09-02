@@ -60,6 +60,7 @@ function AddRecipeService($http) {
 
   //  Delete an ingredient
   service.deleteIngredient = (ingredientId) => {
+    console.log('Ingredient ID:', ingredientId);
     return $http.delete('/recipe/ingredient', {
       params: {
         ingredientId
