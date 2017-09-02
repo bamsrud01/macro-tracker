@@ -30,10 +30,15 @@ TO-DO - SECONDARY
   - Add
   - Update
   - Delete
-- Log
-  - View existing logged items
-  - Link food to log
-  - Link recipe to log
+- Linking
+  - Food to log
+  - Recipe to log
+  - Food to edit
+  - Recipe to edit
+  - Food to favorite
+  - Recipe to favorite
+  - Favorite to log
+  - Favorite to edit
 - Images
 - Show usernames in place of ID (track, foods, recipes, view, profile, comments)
 
@@ -53,6 +58,7 @@ DONE
   - Add
 - Add Item
 - Log
+  - View existing logged items
   - Get History
   - Add Item to History
 */

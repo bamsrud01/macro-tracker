@@ -32,16 +32,17 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
       }
     });
   }
+  //  track.dayStats = {id, user_id,log_date,weight,calories,carbs,protein,fat}
 
   //  Select a new date to log
   track.updateLogDate = () => {
     track.logDate = track.selectedDate.toDateString();
     track.checkByDate(track.logDate);
   }
+  //  track.logDate
 
   //  Get all items logged for the day - UNFINISHED
   track.displayLoggedItems = () => {
-    console.log('GETTING ITEMS');
     console.log('Day Stats:', track.dayStats);
     //  Fetch log items on date
     TrackService.getLoggedItems(track.dayStats.user_id, track.dayStats.log_date).then(response => {
@@ -51,6 +52,7 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
       track.getItemInformation();
     });
   }
+  //  track.itemsToLog = {id, user_id,food_id,recipe_id,amount,log_date}
 
   //  Get information on items logged for the day
   track.getItemInformation = () => {
@@ -59,32 +61,30 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
       //  Check if item is a food or recipe
       if (item.food_id) {
         let itemAmount = item.amount;
+        let logId = item.id;
         FoodService.getOneFood(item.food_id).then(response => {
           //  Add food properties to item
           item = response[0];
           item.amount = itemAmount;
-          item.type = 'food';
+          item.id = logId;
           console.log('This is a food:', item);
           track.loggedItems.push(item);
         });
       } else if (item.recipe_id) {
         let itemAmount = item.amount;
+        let logId = item.id;
         RecipeService.getOneRecipe(item.recipe_id).then(response => {
           //  Add recipe properties to item
           item = response[0];
           item.amount = itemAmount;
-          item.type = 'recipe';
+          item.id = logId;
           console.log('This is a recipe:', item);
           track.loggedItems.push(item);
         });
-      } else {
-        console.log('This is neither a food nor a recipe');
       }
     });
-      //  Get for foods
-      //  Get for recipes
-      //  Get others
   }
+  //  track.loggedItems = {(food or recipe object),amount,id(of logged)}
 
   //  Prepare data for a new logged item - MAY NEED ADJUSTMENT
   track.prepareEntry = (itemType, itemId) => {
@@ -108,6 +108,12 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
       user_id: track.activeUser.user_id
     }
   }
+  //  track.pendingData = {shown,type,calories,carbs,protein,fat,amount,date,user_id}
+
+  //  Delete this item from the log.  Check in pending
+  track.deleteFromLog = loggedItem => {
+    console.log('UNFINISHED');
+  }
 
   //  Calculate sum of existing data and pending data
   function calculateSums(dayId) {
@@ -125,6 +131,7 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
 
     return forSubmission;
   }
+  //  forSubmission = {id,calories,carbs,protein,fat}
 
   //  Get information for items to submit and clear information
   function getFoodInformation(foodId) {
@@ -141,6 +148,7 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
       addToPending(response[0]);
     });
   }
+  //  track.receivedInformation = {type,itemId,name,variety,serving,brand,user_id}
   function getRecipeInformation(recipeId) {
     RecipeService.getOneRecipe(recipeId).then(response => {
       track.receivedInformation = {
@@ -152,9 +160,11 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
       addToPending(response[0]);
     });
   }
+  //  track.receivedInformation = {type,itemId,name,serving}
   function clearInformation() {
     track.receivedInformation = {}
   }
+  //  CLEARS track.receivedInformation
 
   //  Add nutrition data to pending data
   function addToPending(foodInformation) {
@@ -163,8 +173,9 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
     track.pendingData.protein = foodInformation.protein;
     track.pendingData.fat = foodInformation.fat;
   }
+  //  track.pendingData = calories,carbs,protein,fat
 
-  //  Submit or update record
+  //  Submit or update record 
   track.submitRecord = () => {
     var itemInfo = {
       data: track.pendingData,

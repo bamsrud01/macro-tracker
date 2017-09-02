@@ -40,6 +40,7 @@
       <span ng-show="item.variety">Variety: {{item.variety}}</span>
       <span ng-show="item.brand">Brand: {{item.brand}}</span>
     </h6>
+    <button ng-click="track.deleteFromLog(item)">Delete</button>
   </div>
 </div>
 <div ng-show="track.pendingData.shown">
@@ -70,6 +71,7 @@
 </div>
 <div>
   <h5>Preview Day's Stats</h5>
+  <h6>Note:  If you have manually entered information, the sum of logged items may not match the logged total</h6>
   <p>Calories: {{(track.dayStats.calories || 0) + (track.pendingData.calories || 0)}}</p>
   <p>Carbs: {{(track.dayStats.carbs || 0) + (track.pendingData.carbs || 0)}}</p>
   <p>Protein: {{(track.dayStats.protein || 0) + (track.pendingData.protein || 0)}}</p>
