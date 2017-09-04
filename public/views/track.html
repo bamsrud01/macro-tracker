@@ -62,20 +62,26 @@
         <span ng-show="track.receivedInformation.user_id">Author(id): {{track.receivedInformation.user_id}}</span>
       </h6>
     </div>
-  <label>Calories (g)</label><input type="number" ng-model="track.pendingData.calories"/>
-  <label>Net Carbs (g)</label><input type="number" ng-model="track.pendingData.carbs"/>
-  <label>Protein (g)</label><input type="number" ng-model="track.pendingData.protein"/>
-  <label>Fat (g)</label><input type="number" ng-model="track.pendingData.fat"/>
-  <!-- Amount -->
-  <button ng-click="track.submitRecord()">Submit</button>
+  <div>
+    <p>Calories: {{track.pendingData.calories}}</p>
+    <p>Net Carbs: {{track.pendingData.carbs}}g</p>
+    <p>Protein: {{track.pendingData.protein}}g</p>
+    <p>Fat: {{track.pendingData.fat}}g</p>
+    <!-- <label>Calories</label><input type="number" ng-model="track.pendingData.calories"/>
+    <label>Net Carbs (g)</label><input type="number" ng-model="track.pendingData.carbs"/>
+    <label>Protein (g)</label><input type="number" ng-model="track.pendingData.protein"/>
+    <label>Fat (g)</label><input type="number" ng-model="track.pendingData.fat"/> -->
+    <!-- Amount -->
+    <button ng-click="track.submitRecord()">Submit</button>
+  </div>
 </div>
 <div>
   <h5>Preview Day's Stats</h5>
   <h6>Note:  If you have manually entered information, the sum of logged items may not match the logged total</h6>
   <p>Calories: {{(track.dayStats.calories || 0) + (track.pendingData.calories || 0)}}</p>
-  <p>Carbs: {{(track.dayStats.carbs || 0) + (track.pendingData.carbs || 0)}}</p>
-  <p>Protein: {{(track.dayStats.protein || 0) + (track.pendingData.protein || 0)}}</p>
-  <p>Fat: {{(track.dayStats.fat || 0) + (track.pendingData.fat || 0)}}</p>
+  <p>Carbs: {{(track.dayStats.carbs || 0) + (track.pendingData.carbs || 0)}}g</p>
+  <p>Protein: {{(track.dayStats.protein || 0) + (track.pendingData.protein || 0)}}g</p>
+  <p>Fat: {{(track.dayStats.fat || 0) + (track.pendingData.fat || 0)}}g</p>
 </div>
 <div>
   <h3>Sidebar Content (Later)</h3>
