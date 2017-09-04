@@ -83,7 +83,7 @@ function AddRecipeController(AddRecipeService, RecipeService, MainService, $loca
       food_name: add.newIngredient.name,
       food_amount: add.newIngredient.amount
     });
-    add.cancel();
+    add.clear();
   }
 
   //  Create an ingredient on existing recipe

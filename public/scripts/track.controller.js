@@ -175,7 +175,7 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
   }
   //  track.pendingData = calories,carbs,protein,fat
 
-  //  Submit or update record 
+  //  Submit or update record
   track.submitRecord = () => {
     var itemInfo = {
       data: track.pendingData,
