@@ -5,6 +5,7 @@
   <button ng-click="track.updateLogDate()">Select</button>
 </div>
 
+<!-- Cumulative total for all recorded items on selected day -->
 <div ng-hide="track.editAll">
   <h3>Log for {{track.dayStats.log_date}}</h3>
   <p ng-show="track.showWeight">Current Weight: {{track.dayStats.weight}}</p>
@@ -17,8 +18,10 @@
   <p>Today's Fat: {{track.dayStats.fat}} g</p>
   <button ng-click="track.editAll = true">Edit Directly</button>
 </div>
+<!-- What is this doing? -->
 <div ng-show="track.editAll">
-  <h3>Edit information directly | {{track.dayStats.log_date}}</h3>
+  <!-- Will not be editing directly, but keep for now -->
+  <!-- <h3>Edit information directly | {{track.dayStats.log_date}}</h3> -->
   <input type="text" ng-model="track.dayStats.weight" placeholder="Weight" />
   <input type="number" ng-model="track.dayStats.calories" placeholder="Calories" />
   <input type="number" ng-model="track.dayStats.carbs" placeholder="Net Carbs (g)" />
@@ -27,6 +30,7 @@
   <button ng-click="track.updateAll()">Update</button>
   <button ng-click="track.editAll = false">Cancel</button>
 </div>
+<!-- List of items logged for the day -->
 <div>
   <h3>Today's Logged items</h3>
   <!-- NG-repeat of track.loggedItems -->
@@ -43,6 +47,7 @@
     <button ng-click="track.deleteFromLog(item)">Delete</button>
   </div>
 </div>
+<!-- Pending data for the day -->
 <div ng-show="track.pendingData.shown">
   <h4>Pending Data</h4>
     <!-- Only show if user logging an existing item. -->
@@ -63,21 +68,17 @@
       </h6>
     </div>
   <div>
-    <p>Calories: {{track.pendingData.calories}}</p>
+    <!-- <p>Calories: {{track.pendingData.calories}}</p>
     <p>Net Carbs: {{track.pendingData.carbs}}g</p>
     <p>Protein: {{track.pendingData.protein}}g</p>
-    <p>Fat: {{track.pendingData.fat}}g</p>
-    <!-- <label>Calories</label><input type="number" ng-model="track.pendingData.calories"/>
-    <label>Net Carbs (g)</label><input type="number" ng-model="track.pendingData.carbs"/>
-    <label>Protein (g)</label><input type="number" ng-model="track.pendingData.protein"/>
-    <label>Fat (g)</label><input type="number" ng-model="track.pendingData.fat"/> -->
+    <p>Fat: {{track.pendingData.fat}}g</p> -->
     <!-- Amount -->
     <button ng-click="track.submitRecord()">Submit</button>
   </div>
 </div>
+<!-- Preview of cumulative total for day after pending is approved -->
 <div>
   <h5>Preview Day's Stats</h5>
-  <h6>Note:  If you have manually entered information, the sum of logged items may not match the logged total</h6>
   <p>Calories: {{(track.dayStats.calories || 0) + (track.pendingData.calories || 0)}}</p>
   <p>Carbs: {{(track.dayStats.carbs || 0) + (track.pendingData.carbs || 0)}}g</p>
   <p>Protein: {{(track.dayStats.protein || 0) + (track.pendingData.protein || 0)}}g</p>
