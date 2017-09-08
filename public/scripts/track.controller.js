@@ -186,7 +186,10 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
 
   //  Update pending information on amount change
   track.updatePendingAmount = () => {
-    track.pendingData.calories = track.amountToLog * track.receivedInformation.calories;
+    track.pendingData.calories = track.amountToLog * (track.receivedInformation.calories || 0);
+    track.pendingData.carbs = track.amountToLog * (track.receivedInformation.carbs || 0);
+    track.pendingData.protein = track.amountToLog * (track.receivedInformation.protein || 0);
+    track.pendingData.fat  = track.amountToLog * (track.receivedInformation.fat || 0);
   }
 
   //  Submit or update record
