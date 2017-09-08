@@ -103,7 +103,7 @@ CREATE TABLE log_items (
   log_id INT NOT NULL,
   food_id INT,
   recipe_id INT,
-  amount INT NOT NULL,
+  amount decimal(10,2) NOT NULL,
   log_date varchar(100) NOT NULL
 );
 

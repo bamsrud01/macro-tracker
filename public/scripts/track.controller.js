@@ -41,23 +41,23 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
   }
   //  track.logDate
 
-  //  Get all items logged for the day - UNFINISHED
+  //  Get all items logged for the day - UNFINISHED(?)
   track.displayLoggedItems = () => {
     console.log('Day Stats:', track.dayStats);
     //  Fetch log items on date
     TrackService.getLoggedItems(track.dayStats.user_id, track.dayStats.log_date).then(response => {
-      track.itemsToLog = response;
-      console.log('Logging:', track.itemsToLog);
+      track.itemsToDisplay = response;
+      console.log('Logging:', track.itemsToDisplay);
       track.loggedItems = [];
       track.getItemInformation();
     });
   }
-  //  track.itemsToLog = {id, user_id,food_id,recipe_id,amount,log_date}
+  //  track.itemsToDisplay = {id, user_id,food_id,recipe_id,amount,log_date}
 
   //  Get information on items logged for the day
   track.getItemInformation = () => {
-    //  Map through all in track.itemsToLog
-    track.itemsToLog.map(item => {
+    //  Map through all in track.itemsToDisplay
+    track.itemsToDisplay.map(item => {
       //  Check if item is a food or recipe
       if (item.food_id) {
         let itemAmount = item.amount;
@@ -67,7 +67,6 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
           item = response[0];
           item.amount = itemAmount;
           item.id = logId;
-          console.log('This is a food:', item);
           track.loggedItems.push(item);
         });
       } else if (item.recipe_id) {
@@ -78,7 +77,6 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
           item = response[0];
           item.amount = itemAmount;
           item.id = logId;
-          console.log('This is a recipe:', item);
           track.loggedItems.push(item);
         });
       }
@@ -103,7 +101,7 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
       carbs: null,
       protein: null,
       fat: null,
-      amount: null,
+      amount: 1,
       date: null,
       user_id: track.activeUser.user_id
     }
@@ -112,7 +110,9 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
 
   //  Delete this item from the log.  Check in pending
   track.deleteFromLog = loggedItem => {
-    console.log('UNFINISHED');
+    console.log('UNFINISHED', loggedItem);
+    //  Remove by id
+    //  Subtract item from day log
   }
 
   //  Calculate sum of existing data and pending data
@@ -143,7 +143,11 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
         variety: response[0].variety,
         serving: response[0].serving,
         brand: response[0].brand,
-        user_id: response[0].user_id
+        user_id: response[0].user_id,
+        calories: response[0].calories,
+        carbs: response[0].carbs,
+        protein: response[0].protein,
+        fat: response[0].fat
       }
       addToPending(response[0]);
     });
@@ -155,7 +159,11 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
         type: 'recipe',
         itemId: response[0].id,
         name: response[0].name,
-        serving: response[0].serving
+        serving: response[0].serving,
+        calories: response[0].calories,
+        carbs: response[0].carbs,
+        protein: response[0].protein,
+        fat: response[0].fat
       }
       addToPending(response[0]);
     });
@@ -172,8 +180,14 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
     track.pendingData.carbs = foodInformation.carbs;
     track.pendingData.protein = foodInformation.protein;
     track.pendingData.fat = foodInformation.fat;
+    console.log('ADDING TO PENDING:', track.pendingData);
   }
   //  track.pendingData = calories,carbs,protein,fat
+
+  //  Update pending information on amount change
+  track.updatePendingAmount = () => {
+    track.pendingData.calories = track.amountToLog * track.receivedInformation.calories;
+  }
 
   //  Submit or update record
   track.submitRecord = () => {
@@ -201,20 +215,23 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
       user_id: track.activeUser.user_id,
       log_id: logId,
       item_id: itemInfo.itemId,
-      amount: 1,
+      amount: (track.amountToLog || 1),
       log_date: track.logDate
     }
+    console.log('Check amount:', recordData);
     if (itemInfo.data.type == 'food') {
       //  Add item to log_foods table using track.receivedItemInformation
-      TrackService.postFoodRecord(recordData).then(
+      TrackService.postFoodRecord(recordData).then(() => {
         //  Reset item selection?
-      );
+        track.amountToLog = 1;
+      });
     }
     if (itemInfo.data.type == 'recipe') {
       //  Add item to log_recipes table using track.receivedItemInformation
-      TrackService.postRecipeRecord(recordData).then(
+      TrackService.postRecipeRecord(recordData).then(() => {
         //  Reset item selection?
-      );
+        track.amountToLog = 1;
+      });
     }
   }
 
@@ -236,6 +253,6 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
 
   //  Run function to set log values
   track.checkByDate(track.logDate);
-  track.prepareEntry('food', 1);
+  track.prepareEntry('recipe', 19);
 
 }

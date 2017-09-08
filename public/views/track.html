@@ -35,7 +35,7 @@
   <h3>Today's Logged items</h3>
   <!-- NG-repeat of track.loggedItems -->
   <div ng-repeat="item in track.loggedItems">
-    <p>{{item.name}} | Servings: {{item.amount}}</p>
+    <p>{{item.name}} | Number of servings: {{item.amount}}</p>
     <h6>Serving size: {{item.serving || 'unknown'}}
       Calories: {{item.calories || 'unknown'}}
       Net Carbs: {{item.carbs - (item.fiber || 0) + 'g' || 'unknown'}}
@@ -53,15 +53,19 @@
     <!-- Only show if user logging an existing item. -->
     <div ng-show="track.receivedInformation.type == 'food'">
       <h5>{{track.receivedInformation.name}}</h5>
+      <label>Number of servings:</label>
+      <input type="number" ng-model="track.pendingData.amount" />
       <h6>
         <span ng-show="track.receivedInformation.variety">Variety: {{track.receivedInformation.variety}}</span>
-        <span ng-show="track.receivedInformation.serving">Serving: {{track.receivedInformation.serving}}</span>
+        <span ng-show="track.receivedInformation.serving">Serving size: {{track.receivedInformation.serving}}</span>
         <span ng-show="track.receivedInformation.brand">Brand: {{track.receivedInformation.brand}}</span>
         <span ng-show="track.receivedInformation.user_id">Author(id): {{track.receivedInformation.user_id}}</span>
       </h6>
     </div>
     <div ng-show="track.receivedInformation.type == 'recipe'">
       <h5>{{track.receivedInformation.name}}</h5>
+      <label>Number of servings:</label>
+      <input type="number" ng-model="track.amountToLog" ng-change="track.updatePendingAmount()" />
       <h6>
         <span ng-show="track.receivedInformation.serving">Serving: {{track.receivedInformation.serving}}</span>
         <span ng-show="track.receivedInformation.user_id">Author(id): {{track.receivedInformation.user_id}}</span>
