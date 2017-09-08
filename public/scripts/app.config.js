@@ -43,10 +43,17 @@ TO-DO - SECONDARY
 - Log
   - Order listed items by ID
   - Display profile goals (e.g. logged / goal, 'Carbs: 12g / 25g, 13g remaining')
+  - Remove dummy data once other routes implemented
 - Images
 - Show usernames in place of ID (track, foods, recipes, view, profile, comments)
 - Modals
   - Log: delete
+- Search
+  - In log
+  - In foods
+  - In recipes
+  - In favorites
+- Cleanup
 
 
 DONE

@@ -1,6 +1,8 @@
 angular.module('macrotrack')
   .controller('TrackController', TrackController);
 
+//  This page is a mess!  Cleanup high priority 
+
 //  Manages adding foods / recipes to user log
 function TrackController(TrackService, ProfileService, FoodService, RecipeService, MainService) {
 
