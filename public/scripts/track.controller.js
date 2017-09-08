@@ -108,13 +108,6 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
   }
   //  track.pendingData = {shown,type,calories,carbs,protein,fat,amount,date,user_id}
 
-  //  Delete this item from the log.  Check in pending
-  track.deleteFromLog = loggedItem => {
-    console.log('UNFINISHED', loggedItem);
-    //  Remove by id
-    //  Subtract item from day log
-  }
-
   //  Calculate sum of existing data and pending data
   function calculateSums(dayId) {
     var forSubmission = {
@@ -145,7 +138,7 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
         brand: response[0].brand,
         user_id: response[0].user_id,
         calories: response[0].calories,
-        carbs: response[0].carbs,
+        carbs: response[0].carbs - (response[0].fiber || 0),
         protein: response[0].protein,
         fat: response[0].fat
       }
@@ -161,7 +154,7 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
         name: response[0].name,
         serving: response[0].serving,
         calories: response[0].calories,
-        carbs: response[0].carbs,
+        carbs: response[0].carbs - (response[0].fiber || 0),
         protein: response[0].protein,
         fat: response[0].fat
       }
@@ -177,7 +170,7 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
   //  Add nutrition data to pending data
   function addToPending(foodInformation) {
     track.pendingData.calories = foodInformation.calories;
-    track.pendingData.carbs = foodInformation.carbs;
+    track.pendingData.carbs = foodInformation.carbs - foodInformation.fiber;
     track.pendingData.protein = foodInformation.protein;
     track.pendingData.fat = foodInformation.fat;
     console.log('ADDING TO PENDING:', track.pendingData);
@@ -257,5 +250,43 @@ function TrackController(TrackService, ProfileService, FoodService, RecipeServic
   //  Run function to set log values
   track.checkByDate(track.logDate);
   track.prepareEntry('recipe', 19);
+
+  /*  ALERTS: Implement into modal later */
+
+  track.deleteFromLog = (item) => {
+    //  Multiply fields by amount
+    console.log(item);
+    var deletionData = {
+      calories: Math.floor((item.calories || 0) * item.amount),
+      carbs: Math.floor(((item.carbs || 0) - (item.fiber || 0)) * item.amount),
+      protein: Math.floor((item.protein || 0) * item.amount),
+      fat: Math.floor((item.fat || 0) * item.amount),
+    };
+    console.log('Data to remove:', deletionData);
+    //  Prepare updated day fields
+    var updatedDayStats = {
+      id: track.dayStats.id,
+      calories: (track.dayStats.calories - deletionData.calories),
+      carbs: (track.dayStats.carbs - deletionData.carbs),
+      protein: (track.dayStats.protein - deletionData.protein),
+      fat: (track.dayStats.fat - deletionData.fat)
+    }
+    console.log('Stats after deletion:', updatedDayStats);
+    //  Confirm deletion: Confirm
+        //  Update day fields in database
+        //  Delete item record from database
+    //  Confirm deletion: Cancel
+        //  Reset fields
+    if (confirm('Would you like to delete this item?')) {
+      console.log('DELETING');
+      TrackService.updateLog(updatedDayStats).then(() => {
+        TrackService.deleteItemRecord(item.id).then(() => {
+          track.checkByDate(track.logDate);
+        });
+      });
+    } else {
+      console.log('CANCELLING');
+    }
+  }
 
 }

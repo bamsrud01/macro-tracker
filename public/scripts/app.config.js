@@ -1,6 +1,4 @@
 /*  TO-DO - PRIORITY
-- Log
-  - Delete From History (with adjustment to log)
 - Profile
   - Display
 - View Item (recipe and food)
@@ -42,8 +40,13 @@ TO-DO - SECONDARY
   - View to log
   - Favorite to log
   - Favorite to edit
+- Log
+  - Order listed items by ID
+  - Display profile goals (e.g. logged / goal, 'Carbs: 12g / 25g, 13g remaining')
 - Images
 - Show usernames in place of ID (track, foods, recipes, view, profile, comments)
+- Modals
+  - Log: delete
 
 
 DONE
@@ -64,6 +67,7 @@ DONE
   - View existing logged items
   - Get History
   - Add Item to History
+  - Delete From History (with adjustment to log)
 */
 
 angular.module('macrotrack')

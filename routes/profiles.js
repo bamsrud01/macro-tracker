@@ -235,6 +235,31 @@ router.put('/all', function(req, res) {
 
 /*  DELETE requests  */
 
+//  Delete an item record from log
+router.delete('/item', function(req, res) {
+  const itemId = req.query.itemId;
+  pool.connect(function(err, client, done) {
+    try {
+      if (err) {
+        console.log('Error connecting to database:', err);
+        res.sendStatus(500);
+        return;
+      }
+      client.query('DELETE FROM log_items WHERE id=$1', [itemId],
+      function (err, result) {
+        if (err) {
+          console.log('Error querying database:', err);
+          res.sendStatus(500);
+          return;
+        }
+        console.log('Deleted food');
+        res.sendStatus(204);
+      });
+    } finally {
+      done();
+    }
+  });
+});
 
 
 //  Export router

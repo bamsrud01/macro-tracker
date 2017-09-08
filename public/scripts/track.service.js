@@ -90,4 +90,16 @@ function TrackService($http) {
     });
   }
 
+  //  Delete an item record
+  service.deleteItemRecord = (itemId) => {
+    return $http.delete('/profiles/item', {
+      params: {
+        itemId
+      }
+    }).then(response => {
+      console.log('SERVICE returned response:', response);
+      return;
+    });
+  }
+
 }
