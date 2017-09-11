@@ -54,6 +54,8 @@ TO-DO - SECONDARY
   - In recipes
   - In favorites
 - Cleanup
+- Register
+- Sign in/out, user links
 
 
 DONE
