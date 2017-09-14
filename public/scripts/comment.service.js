@@ -7,9 +7,9 @@ function CommentService($http) {
 
   let service = this;
 
-  //  TEST CREATE: commentType, userId, resourceId, commentDate, comment
+  //  TEST CREATE: commentType, {userId, resourceId, commentDate, comment}
   //  TEST READ: commentType, resourceId
-  //  TEST UPDATE: commentType, id, resourceId, commentDate, comment
+  //  TEST UPDATE: commentType, {id, resourceId, commentDate, comment}
   //  TEST DELETE: commentType, commentId
 
   //  commentType = 'food || recipe || profile'
@@ -26,9 +26,29 @@ function CommentService($http) {
     });
   }
 
-  service.postComment
+  //  Post a comment
+  service.postComment = (commentType, commentData) => {
+    return $http({
+      method: 'POST',
+      url: '/comment/' + commentType,
+      data: commentData
+    }).then(response => {
+      console.log('Posted comment:', response);
+      return response.data;
+    });
+  }
 
-  service.updateComment
+  //  Update a comment
+  service.updateComment = (commentType, commentData) => {
+    return $http({
+      method: 'PUT',
+      url: '/comment/' + commentType,
+      data: commentData
+    }).then(response => {
+      console.log('Updated comment:', commentData);
+      return response.data;
+    });
+  }
 
   //  Delete a comment
   service.deleteComment = (commentType, commentId) => {
