@@ -1,8 +1,13 @@
 <h1>Profile Route</h1>
-<!-- Only shown if shared -->
 <!-- Title -->
-<!-- User goals (pie chart?) -->
-<!-- Tab to expand user log -->
-<!-- User progress -->
-<!-- Comments -->
-<!-- Comment Form -->
+<!-- Only shown if shared OR selected and active are the same -->
+<div ng-show="profile.selectedUser.shared">
+  <!-- User goals (pie chart?) -->
+  <!-- Tab to expand user log -->
+  <!-- User progress -->
+  <!-- Comments -->
+  <!-- Comment Form -->
+</div>
+<div ng-show="!profile.selectedUser.shared">
+  <h3>This user's information is private.</h3>
+</div>
