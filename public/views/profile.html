@@ -8,6 +8,9 @@
   <!-- Comments -->
   <!-- Comment Form -->
 </div>
-<div ng-show="!profile.selectedUser.shared || !(MainService.state.username == profile.selectedUser.username)">
+<div ng-show="(!profile.selectedUser.shared || !(MainService.state.username == profile.selectedUser.username)) && profile.selectedUser">
   <h3>This user's information is private.</h3>
+</div>
+<div ng-show="!profile.selectedUser">
+  <h3>No user has been selected.</h3>
 </div>
