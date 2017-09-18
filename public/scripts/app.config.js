@@ -40,6 +40,7 @@ TO-DO - SECONDARY
   - View to log
   - Favorite to log
   - Favorite to edit
+  - Profile to log (specific date)
 - Log
   - Order listed items by ID
   - Display profile goals (e.g. logged / goal, 'Carbs: 12g / 25g, 13g remaining')

@@ -22,7 +22,18 @@ function ProfileController(ProfileService, MainService) {
     })
   }
 
-  //  TEST
-  profile.getAllLogs(1000);
+  //  Calculate macronutrient percentages of daily goal
+  function calculatePercentages(user) {
+    var macroTotal = ((user.carbs || 0) + (user.protein || 0) + (user.fat || 0));
+    if (!macroTotal == 0) {
+      profile.percentages = {
+        carbs: ((user.carbs || 0) / macroTotal).toFixed(3),
+        protein: ((user.protein || 0) / macroTotal).toFixed(3),
+        fat: ((user.fat || 0) / macroTotal).toFixed(3)
+      }
+    } else {
+      profile.percentages = null;
+    }
+  }
 
 }
