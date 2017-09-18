@@ -44,7 +44,6 @@ TO-DO - SECONDARY
   - Order listed items by ID
   - Display profile goals (e.g. logged / goal, 'Carbs: 12g / 25g, 13g remaining')
   - Remove dummy data once other routes implemented
-- Images
 - Show usernames in place of ID (track, foods, recipes, view, profile, comments)
 - Modals
   - Log: delete
@@ -56,6 +55,11 @@ TO-DO - SECONDARY
 - Cleanup
 - Register
 - Sign in/out, user links
+- Visuals
+  - Progress graph
+  - Pie charts
+  - Ratio bar per day (flex?)
+  - Images?
 
 
 DONE
