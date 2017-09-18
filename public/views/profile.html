@@ -1,13 +1,13 @@
 <h1>Profile Route</h1>
 <!-- Title -->
 <!-- Only shown if shared OR selected and active are the same -->
-<div ng-show="profile.selectedUser.shared">
+<div ng-show="profile.selectedUser.shared || (MainService.state.username == profile.selectedUser.username)">
   <!-- User goals (pie chart?) -->
   <!-- Tab to expand user log -->
   <!-- User progress -->
   <!-- Comments -->
   <!-- Comment Form -->
 </div>
-<div ng-show="!profile.selectedUser.shared">
+<div ng-show="!profile.selectedUser.shared || !(MainService.state.username == profile.selectedUser.username)">
   <h3>This user's information is private.</h3>
 </div>
