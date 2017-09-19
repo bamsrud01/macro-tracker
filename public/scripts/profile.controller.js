@@ -11,8 +11,19 @@ function ProfileController(ProfileService, MainService) {
 
   //  Logged in user { loggedIn, username, user_id }
   profile.activeUser = MainService.state;
+  profile.comments = [];
 
-  //  Store user data in profile.selectedUser { id, username, password, email, shared, calories, carbs, protein, fat, goal_weight }
+  //  Function to get all information on this profile
+  profile.getAllUserInformation = (userId) => {
+    //  Get user information
+        //  profile.selectedUser { id, username, shared }
+        //  profile.userGoals = {calories, carbs, protein, fat, goal_weight }
+    //  Calculate user percentages
+    //  Get user logs
+    profile.getAllLogs(userId);
+    //  Create progress history
+    //  Get user comments
+  }
 
   //  Fetch log events by user id
   profile.getAllLogs = (id) => {
@@ -23,17 +34,20 @@ function ProfileController(ProfileService, MainService) {
   }
 
   //  Calculate macronutrient percentages of daily goal
-  function calculatePercentages(user) {
-    var macroTotal = ((user.carbs || 0) + (user.protein || 0) + (user.fat || 0));
+  function calculatePercentages(userGoals) {
+    var macroTotal = ((userGoals.carbs || 0) + (userGoals.protein || 0) + (userGoals.fat || 0));
     if (!macroTotal == 0) {
       profile.percentages = {
-        carbs: ((user.carbs || 0) / macroTotal).toFixed(3),
-        protein: ((user.protein || 0) / macroTotal).toFixed(3),
-        fat: ((user.fat || 0) / macroTotal).toFixed(3)
+        carbs: ((userGoals.carbs || 0) / macroTotal).toFixed(3),
+        protein: ((userGoals.protein || 0) / macroTotal).toFixed(3),
+        fat: ((userGoals.fat || 0) / macroTotal).toFixed(3)
       }
     } else {
       profile.percentages = null;
     }
   }
+
+  console.log('Getting all user information!');
+  profile.getAllUserInformation(1000);
 
 }

@@ -3,10 +3,21 @@
 <!-- Only shown if shared OR selected and active are the same -->
 <div ng-show="profile.selectedUser.shared || (MainService.state.username == profile.selectedUser.username)">
   <!-- User goals (pie chart?) -->
-  <!-- Tab to expand user log -->
-  <!-- User progress -->
+  <!-- Tab to expand user log? -->
+  <!-- User progress graph -->
   <!-- Comments -->
+  <h2>Comments({{profile.comments.length}})</h2>
+  <div ng-repeat="comment in profile.comments">
+    <div>
+      <h4>{{comment.user_id}}</h4>
+      <p>{{comment.comment}}</p>
+      <h6>{{comment.comment_date}}</h6>
+    </div>
+  </div>
   <!-- Comment Form -->
+  <div>
+
+  </div>
 </div>
 <div ng-show="(!profile.selectedUser.shared || !(MainService.state.username == profile.selectedUser.username)) && profile.selectedUser">
   <h3>This user's information is private.</h3>
