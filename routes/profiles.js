@@ -8,6 +8,32 @@ const pool = require('../db/connection');
 
 /*  GET requests  */
 
+//  Get user information
+router.get('/user', function(req, res) {
+  const { id } = req.query;
+  pool.connect(function(err, client, done) {
+    try {
+      if (err) {
+        console.log('Error connecting to database:', err);
+        res.sendStatus(500);
+        return;
+      }
+      client.query('SELECT * FROM users WHERE id=$1',
+      [id], function(err, result) {
+        if (err) {
+          console.log('Error querying database:', err);
+          res.sendStatus(500);
+          return;
+        }
+        console.log('Got rows from database (get /profile/user):', result.rows);
+        res.send(result.rows);
+      });
+    } finally {
+      done();
+    }
+  });
+});
+
 //  Get all records for all dates
 router.get('/', function(req, res) {
   const { user_id } = req.query;
@@ -26,7 +52,7 @@ router.get('/', function(req, res) {
           res.sendStatus(500);
           return;
         }
-        console.log('Got rows from database (get /profile/date):', result.rows);
+        console.log('Got rows from database (get /profile/):', result.rows);
         res.send(result.rows);
       });
     } finally {

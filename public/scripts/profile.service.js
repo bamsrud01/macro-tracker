@@ -5,6 +5,17 @@ function ProfileService($http) {
 
   let service = this;
 
+  //  Get user information
+  service.getUserInformation = (userId) => {
+    return $http.get('/profiles/user', {
+      params: {
+        id: userId
+      }
+    }).then(response => {
+      return response.data;
+    });
+  }
+
   //  Get all user logs for a certain date
   service.getLogByDate = (userId, dateString) => {
     return $http.get('/profiles/date', {

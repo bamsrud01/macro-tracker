@@ -9,15 +9,33 @@ function ProfileController(ProfileService, MainService) {
 
   let profile = this;
 
-  //  Logged in user { loggedIn, username, user_id }
+  //  progile.activeUser = { loggedIn, username, user_id }
+  //  profile.selectedUser = { id, username, shared }
+  //  profile.userGoals = {calories, carbs, protein, fat, goal_weight }
+
   profile.activeUser = MainService.state;
   profile.comments = [];
 
   //  Function to get all information on this profile
   profile.getAllUserInformation = (userId) => {
     //  Get user information
-        //  profile.selectedUser { id, username, shared }
-        //  profile.userGoals = {calories, carbs, protein, fat, goal_weight }
+    ProfileService.getUserInformation(userId).then(response => {
+      profile.selectedUser = {
+        id: response[0].id,
+        username: response[0].username,
+        shared: response[0].shared
+      }
+      profile.userGoals = {
+        calories: response[0].calories,
+        carbs: response[0].carbs,
+        protein: response[0].protein,
+        fat: response[0].fat,
+        goal_weight: response[0].goal_weight
+      }
+      console.log('Selected User:', profile.selectedUser);
+      console.log('User goals:', profile.userGoals);
+    });
+
     //  Calculate user percentages
     //  Get user logs
     profile.getAllLogs(userId);
