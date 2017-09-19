@@ -2,7 +2,7 @@ angular.module('macrotrack')
   .controller('ProfileController', ProfileController);
 
 //  Manages displaying, sorting, and updating profile data
-function ProfileController(ProfileService, MainService) {
+function ProfileController(ProfileService, MainService, CommentService) {
 
   //  GOALS
     //  Lots of useful data visualization here:  Weight progress, macronutrient distribution, logged date rows, etc.
@@ -34,13 +34,17 @@ function ProfileController(ProfileService, MainService) {
       }
       console.log('Selected User:', profile.selectedUser);
       console.log('User goals:', profile.userGoals);
+      //  Calculate user percentages
+      calculatePercentages(profile.userGoals);
     });
-
-    //  Calculate user percentages
     //  Get user logs
     profile.getAllLogs(userId);
     //  Create progress history
     //  Get user comments
+    CommentService.getComments('profile', userId).then(response => {
+      profile.comments = response;
+      console.log('Comments:', profile.comments)
+    });
   }
 
   //  Fetch log events by user id
