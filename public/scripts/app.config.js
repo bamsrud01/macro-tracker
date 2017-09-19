@@ -1,6 +1,4 @@
 /*  TO-DO - PRIORITY
-- Profile
-  - Display
 - View Item (recipe and food)
 
 
@@ -82,6 +80,8 @@ DONE
   - Get History
   - Add Item to History
   - Delete From History (with adjustment to log)
+- Profile
+  - Display
 */
 
 angular.module('macrotrack')
