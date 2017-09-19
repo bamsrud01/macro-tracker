@@ -7,19 +7,19 @@ function CommentService($http) {
 
   let service = this;
 
-  //  TEST CREATE: commentType, {userId, resourceId, commentDate, comment}
-  //  TEST READ: commentType, resourceId
-  //  TEST UPDATE: commentType, {id, resourceId, commentDate, comment}
+  //  TEST CREATE: commentType, {userId, targetId, commentDate, comment}
+  //  TEST READ: commentType, targetId
+  //  TEST UPDATE: commentType, {id, targetId, commentDate, comment}
   //  TEST DELETE: commentType, commentId
 
   //  commentType = 'food || recipe || profile'
-  //  resourceId = foodId || recipeId || userId
+  //  targetId = foodId || recipeId || userId
 
   //  Get all comments
-  service.getComments = (commentType, resourceId) => {
+  service.getComments = (commentType, targetId) => {
     return $http.get('/comment/' + commentType, {
       params: {
-        id: resourceId
+        id: targetId
       }
     }).then(response => {
       return response.data;

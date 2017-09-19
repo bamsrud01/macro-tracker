@@ -9,7 +9,7 @@ function ProfileController(ProfileService, MainService, CommentService) {
 
   let profile = this;
 
-  //  progile.activeUser = { loggedIn, username, user_id }
+  //  profile.activeUser = { loggedIn, username, user_id }
   //  profile.selectedUser = { id, username, shared }
   //  profile.userGoals = {calories, carbs, protein, fat, goal_weight }
 
@@ -41,10 +41,7 @@ function ProfileController(ProfileService, MainService, CommentService) {
     profile.getAllLogs(userId);
     //  Create progress history
     //  Get user comments
-    CommentService.getComments('profile', userId).then(response => {
-      profile.comments = response;
-      console.log('Comments:', profile.comments)
-    });
+    getAllComments(userId);
   }
 
   //  Fetch log events by user id
@@ -52,7 +49,21 @@ function ProfileController(ProfileService, MainService, CommentService) {
     ProfileService.getAllLogs(id).then(response => {
       profile.allUserLogs = response;
       console.log('All user logs:', profile.allUserLogs);
-    })
+    });
+  }
+
+  //  Submit a new comment
+  profile.submitComment = () => {
+    var commentToSubmit = {
+      targetId: profile.selectedUser.id,
+      userId: profile.activeUser.user_id,
+      commentDate: new Date().toDateString(),
+      comment: profile.newComment
+    }
+    CommentService.postComment('profile', commentToSubmit).then(response => {
+      profile.newComment = '';
+      getAllComments(profile.selectedUser.id);
+    });
   }
 
   //  Calculate macronutrient percentages of daily goal
@@ -67,6 +78,14 @@ function ProfileController(ProfileService, MainService, CommentService) {
     } else {
       profile.percentages = null;
     }
+  }
+
+  //  Get all comments and update comment list
+  function getAllComments(userId) {
+    CommentService.getComments('profile', userId).then(response => {
+      profile.comments = response;
+      console.log('Comments:', profile.comments)
+    });
   }
 
   console.log('Getting all user information!');

@@ -16,7 +16,9 @@
   </div>
   <!-- Comment Form -->
   <div>
-
+    <h4>Write a comment:</h4>
+    <textarea rows="3" cols="35" ng-model="profile.newComment"></textarea>
+    <button ng-click="profile.submitComment()">Submit</button>
   </div>
 </div>
 <div ng-show="(!profile.selectedUser.shared || !(MainService.state.username == profile.selectedUser.username)) && profile.selectedUser">
