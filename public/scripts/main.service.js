@@ -8,6 +8,7 @@ function MainService($http, $location) {
 
   //  Holds state object:
   //  service.state = { loggedIn, username, user_id }
+  //  service.selectedUserId = id
 
   service.getUsernameById = (id) => {
     console.log('FILL ME IN!');

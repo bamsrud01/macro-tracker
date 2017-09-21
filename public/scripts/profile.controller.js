@@ -89,6 +89,6 @@ function ProfileController(ProfileService, MainService, CommentService) {
   }
 
   console.log('Getting all user information!');
-  profile.getAllUserInformation(1000);
+  profile.getAllUserInformation(MainService.selectedUserId);
 
 }

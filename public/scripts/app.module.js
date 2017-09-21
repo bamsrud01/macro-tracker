@@ -20,4 +20,7 @@ function MainController(MainService) {
     user_id: 1000
   }
 
+  //  Holds the id of user that we want to view in profile page
+  MainService.selectedUserId = 1000;
+
 }
